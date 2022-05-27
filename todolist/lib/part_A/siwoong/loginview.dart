@@ -28,13 +28,16 @@ class _LoginViewState extends State<LoginView> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Log in'),
+          title: const Text('To-do list'),
         ),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Center(
             child: Column(
               children: [
+                Image.asset(
+                  'images/blueScreen.png',
+                ),
                 const SizedBox(
                   height: 50,
                 ),
