@@ -12,9 +12,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-        '/': (context) => const LoginView(),
+        // part_A
+        '/login': (context) => const LoginView(),
+
+        // part_B
+
+        // part_C
       },
-      initialRoute: '/',
+      initialRoute: '/login',
     );
   }
 }
