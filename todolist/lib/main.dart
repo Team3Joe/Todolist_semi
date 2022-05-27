@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:semi_todolist/part_A/firstPage.dart';
+import 'package:todolist/part_A/firstPage.dart';
 
 void main() {
   runApp(const MyApp());
