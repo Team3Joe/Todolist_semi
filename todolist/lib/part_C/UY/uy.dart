@@ -16,9 +16,8 @@ class ListPage extends StatefulWidget {
   State<ListPage> createState() => _ListPageState();
 }
 
-class _ListPageState extends State<ListPage> 
+class _ListPageState extends State<ListPage>
     with SingleTickerProviderStateMixin {
-
   late List todolist;
   bool checkValue = false;
   bool trueyo = true;
@@ -34,12 +33,12 @@ class _ListPageState extends State<ListPage>
     // TODO: implement initState
     super.initState();
     todolist = [];
-  _controller = AnimationController(vsync: this);
+    _controller = AnimationController(vsync: this);
     id = Message.userid;
     getJSONData();
   }
 
-   @override
+  @override
   void dispose() {
     super.dispose();
     _controller.dispose();
@@ -188,7 +187,6 @@ class _ListPageState extends State<ListPage>
     print(data[0]['pw']);
     return true;
   }
-
 
   Future<bool> getJSONData() async {
     //비동기 함수 == 작업하면서 화면구성도 같이하겠다!
