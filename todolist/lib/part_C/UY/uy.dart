@@ -54,6 +54,7 @@ class _ListPageState extends State<ListPage> {
                             .then((value) => getJSONData());
                         ListItem.code = todolist[index]['code'];
                         ListItem.content = todolist[index]['content'];
+                        ListItem.uid = todolist[index]['uid'];
                       });
                     },
                     child: Card(

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:http/http.dart' as http;
+import 'package:todolist/part_C/UY/list_item.dart';
 
 class WritePage extends StatefulWidget {
   const WritePage({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class _WritePageState extends State<WritePage> {
   late TextEditingController write;
   late String result;
   late String content;
+  String uid = ListItem.uid;
 
   @override
   void initState() {
