@@ -44,47 +44,62 @@ class _ListPageState extends State<ListPage> {
                       onTap: () {
                         // Massage.code = data[index]['code'];
                         // Navigator.pushNamed(context, '/1st');
+
+                        setState(() {
+                          Navigator.pushNamed(context, '/modify')
+                              .then((value) => getJSONData());
+                          ListItem.code = todolist[index]['code'];
+                          ListItem.content = todolist[index]['content'];
+                        });
                       },
-                      child: Card(
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Checkbox(
-                                        value: todolist[index]['check'] == '1'
-                                            ? false
-                                            : true,
-                                        onChanged: (check) {
-                                          setState(() {
-                                            checkValue = check!;
-                                          });
-                                        },
-                                      ),
-                                      Text("content : "),
-                                      Text(
-                                        todolist[index]['content'],
-                                      ),
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
+                      child: GestureDetector(
+                        onLongPress: () {
+                          // ListItem.code = todolist[index]['code'];
+                          // ListItem.content = todolist[index]['content'];
+                          // Navigator.pushNamed(context, '/modify')
+                          //     .then((value) => getJSONData());
+                        },
+                        child: Card(
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: [
+                                    Row(
                                       children: [
-                                        Text("check : "),
+                                        Checkbox(
+                                          value: todolist[index]['check'] == '1'
+                                              ? false
+                                              : true,
+                                          onChanged: (check) {
+                                            setState(() {
+                                              checkValue = check!;
+                                            });
+                                          },
+                                        ),
+                                        Text("content : "),
                                         Text(
-                                          todolist[index]['check'],
+                                          todolist[index]['content'],
                                         ),
                                       ],
                                     ),
-                                  ),
-                                ],
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          Text("check : "),
+                                          Text(
+                                            todolist[index]['check'],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     );
