@@ -1,9 +1,9 @@
 import 'dart:convert';
+import 'dart:ui';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:todolist/part_C/UY/list_item.dart';
 
 class ListPage extends StatefulWidget {
@@ -16,7 +16,7 @@ class ListPage extends StatefulWidget {
 class _ListPageState extends State<ListPage> {
   late List todolist;
   bool checkValue = false;
-  bool trueyo =  true;
+  bool trueyo = true;
   bool falseyo = false;
   late String result;
 
@@ -38,74 +38,78 @@ class _ListPageState extends State<ListPage> {
         backgroundColor: const Color.fromARGB(255, 164, 154, 239),
       ),
       body: Center(
-          child: todolist.isEmpty
-              ? const Text("데이터가 없습니다.")
-              : ListView.builder(
-                  itemCount: todolist.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        // Massage.code = data[index]['code'];
-                        // Navigator.pushNamed(context, '/1st');
-                      },
-                      child: Card(
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Checkbox(
-                                        value: todolist[index]['check'] == '1'
-                                            ? false
-                                            : true,
-                                        onChanged: (value) {
-                        
-                                          setState(() {
-                                                     if(value == true){
-                                               todolist[index]['check'] = '0';
-                                                
-                                                 updateCheckboxAction(index);
-                                               
-                                            }else{
-                                               todolist[index]['check'] = '1';
-                                                updateCheckboxAction(index);
-                                                   
-                                            }
-                                            
-                                  
-                                          
-                                            
-                                          });
-                                
-                                          
-                                
+        child: todolist.isEmpty
+            ? const Text(
+                "데이터가 없습니다. \n 화면 우측하단의 + 버튼을 눌러 \n 당신의 ToDoList를 추가하세요.")
+            : ListView.builder(
+                itemCount: todolist.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      // Massage.code = data[index]['code'];
+                      // Navigator.pushNamed(context, '/1st');
 
-                                        },
-                                      ),
+                      setState(() {
+                        Navigator.pushNamed(context, '/modify')
+                            .then((value) => getJSONData());
+                        ListItem.code = todolist[index]['code'];
+                        ListItem.content = todolist[index]['content'];
+                      });
+                    },
+                    child: Card(
+                      color: Colors.deepPurple[50],
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                Row(
+                                  children: [
+                                    Checkbox(
+                                      value: todolist[index]['check'] == '1'
+                                          ? false
+                                          : true,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          if (value == true) {
+                                            todolist[index]['check'] = '0';
 
-                                      Text(
-                                        todolist[index]['content'],
-                                      ),
-                                    ],
-                                  ),
-                     
-                                ],
-                              ),
+                                            updateCheckboxAction(index);
+                                          } else {
+                                            todolist[index]['check'] = '1';
+                                            updateCheckboxAction(index);
+                                          }
+                                        });
+                                      },
+                                    ),
+                                    todolist[index]['check'] == '0'
+                                        ? Text(
+                                            todolist[index]['content'],
+                                            style: const TextStyle(
+                                                color: Colors.grey),
+                                          )
+                                        : Text(
+                                            todolist[index]['content'],
+                                          )
+                                  ],
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    );
-                  })),
+                    ),
+                  );
+                },
+              ), //Lb
+      ), //Center,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color.fromARGB(255, 164, 154, 239),
         child: const Icon(Icons.add),
         onPressed: () {
           //WritePage로 이동
-          Navigator.pushNamed(context, "/write");
+          Navigator.pushNamed(context, "/write").then((value) => getJSONData());
         },
       ),
     );
@@ -142,8 +146,7 @@ class _ListPageState extends State<ListPage> {
 
   updateCheckboxAction(index) async {
     var url = Uri.parse(
-        'http://localhost:8080/Flutter/todolist_update_checkBox.jsp?check=${todolist[index]['check']}&lCode=${todolist[index]['code']}'
-        );
+        'http://localhost:8080/Flutter/todolist_update_checkBox.jsp?check=${todolist[index]['check']}&lCode=${todolist[index]['code']}');
     var response = await http.get(url);
     setState(() {
       var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
@@ -155,33 +158,33 @@ class _ListPageState extends State<ListPage> {
       errorSnackBar(context);
     }
   }
- _showDialog(BuildContext context){
+
+  _showDialog(BuildContext context) {
     showDialog(
-      context: context, 
-      builder: (BuildContext context){
-        return AlertDialog(
-          title: const Text('수정 결과'),
-          content: const Text('수정이 완료 되었습니다.'),
-          actions: [
-            TextButton(
-              onPressed: (){
-                Navigator.of(context).pop();
-              } 
-            , child: const Text('OK'),),
-          ],
-        );
-      });
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('수정 결과'),
+            content: const Text('수정이 완료 되었습니다.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        });
   }
 
-  errorSnackBar(BuildContext context){
+  errorSnackBar(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar( 
-      content: Text('사용자 정보 입력에 문제가 발생 하였습니다.'),
-      duration: Duration(seconds: 2),
-      backgroundColor: Colors.red,
+      const SnackBar(
+        content: Text('사용자 정보 입력에 문제가 발생 하였습니다.'),
+        duration: Duration(seconds: 2),
+        backgroundColor: Colors.red,
       ),
     );
-
   }
-
 }//end
