@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         // part_A
         '/login': (context) => const LoginView(),
 
-        // part_B
+        // part_B b
 
         // part_C
       },
