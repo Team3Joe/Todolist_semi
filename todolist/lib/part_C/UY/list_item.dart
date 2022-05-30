@@ -1,5 +1,6 @@
-class ListItem {
-  static String code = "";
-  static String content = "";
-  static String check = "";
-}
+// class ListItem {
+//   static int code = 0;
+//   static String content = "";
+
+  
+// }
