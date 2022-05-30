@@ -1,9 +1,9 @@
 import 'dart:convert';
+import 'dart:ui';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:todolist/part_C/UY/list_item.dart';
 
 class ListPage extends StatefulWidget {
@@ -39,7 +39,8 @@ class _ListPageState extends State<ListPage> {
       ),
       body: Center(
         child: todolist.isEmpty
-            ? const Text("데이터가 없습니다.")
+            ? const Text(
+                "데이터가 없습니다. \n 화면 우측하단의 + 버튼을 눌러 \n 당신의 ToDoList를 추가하세요.")
             : ListView.builder(
                 itemCount: todolist.length,
                 itemBuilder: (context, index) {
@@ -49,13 +50,14 @@ class _ListPageState extends State<ListPage> {
                       // Navigator.pushNamed(context, '/1st');
 
                       setState(() {
-                        Navigator.pushNamed(context, '/modify')
-                            .then((value) => getJSONData());
                         ListItem.code = todolist[index]['code'];
                         ListItem.content = todolist[index]['content'];
+                        Navigator.pushNamed(context, '/modify')
+                            .then((value) => getJSONData());
                       });
                     },
                     child: Card(
+                      color: Colors.deepPurple[50],
                       child: Column(
                         children: [
                           Padding(
@@ -81,9 +83,15 @@ class _ListPageState extends State<ListPage> {
                                         });
                                       },
                                     ),
-                                    Text(
-                                      todolist[index]['content'],
-                                    ),
+                                    todolist[index]['check'] == '0'
+                                        ? Text(
+                                            todolist[index]['content'],
+                                            style: const TextStyle(
+                                                color: Colors.grey),
+                                          )
+                                        : Text(
+                                            todolist[index]['content'],
+                                          )
                                   ],
                                 ),
                               ],
