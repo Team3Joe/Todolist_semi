@@ -70,6 +70,17 @@ class _ListPageState extends State<ListPage> {
                                       ),
                                     ],
                                   ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Text("check : "),
+                                        Text(
+                                          todolist[index]['check'],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -112,9 +123,6 @@ class _ListPageState extends State<ListPage> {
       //불러오고 수정한값을 이제 넣어주자!
       todolist.addAll(result);
       //print(data[0]['code']); //flutter: S001
-      print(todolist[1]['code']);
-
-      print(todolist[1]['content']);
     });
 
     //print(response.body);

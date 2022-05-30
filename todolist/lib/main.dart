@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         '/list': (context) => const ListPage(),
         '/write': (context) => const WritePage(),
       },
-      initialRoute: '/list',
+      initialRoute: '/write',
     );
   }
 }
