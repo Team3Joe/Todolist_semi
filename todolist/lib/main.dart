@@ -1,7 +1,10 @@
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
+import 'package:todolist/part_A/SM/signin.dart';
+import 'package:todolist/part_A/siwoong/findMain.dart';
 import 'package:todolist/part_A/siwoong/loginview.dart';
-import 'package:todolist/part_B/YJ/drawer.dart';
-import 'package:todolist/part_B/YJ/mypage.dart';
+import 'package:todolist/part_C/UY/modify_page.dart';
+import 'package:todolist/part_C/UY/uy.dart';
+import 'package:todolist/part_C/UY/write_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,13 +19,19 @@ class MyApp extends StatelessWidget {
       routes: {
         // part_A
         '/login': (context) => const LoginView(),
+        '/signin': (context) => const Signin(),
+        '/find': (context) => const FindMain(),
 
         // part_B
-        '/drawer': (context) => const DrawerPage(),
-        '/MyPage':(context) => const MyPage(),
+        // 가슬님것 시작부분 까지만 제가(시웅) 해놓고 나머지는 채워주세요
+        '/drawer': (context) => const Drawer(),
+
         // part_C
+        '/list': (context) => const ListPage(),
+        '/write': (context) => const WritePage(),
+        '/modify': (context) => const ModifyPage(),
       },
-      initialRoute: '/drawer',
+      initialRoute: '/list',
     );
   }
 }
