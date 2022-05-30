@@ -2,34 +2,34 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:todolist/message.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({Key? key}) : super(key: key);
+class FindID extends StatefulWidget {
+  const FindID({Key? key}) : super(key: key);
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<FindID> createState() => _FindIDState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _FindIDState extends State<FindID> {
   // Property
-  late TextEditingController uId;
-  late TextEditingController uPw;
-  late String userID;
-  late String userPW;
+  late TextEditingController uNameField;
+  late TextEditingController uEmailField;
+  late String uName;
+  late String uEmail;
+  late String uId;
 
   late List data;
 
   @override
   void initState() {
     super.initState();
-    uId = TextEditingController();
-    uPw = TextEditingController();
-    userID = '';
-    userPW = '';
+    uNameField = TextEditingController();
+    uEmailField = TextEditingController();
+    uName = '';
+    uEmail = '';
+    uId = '';
 
     data = [];
-    getJSONData();
   }
 
   @override
@@ -39,11 +39,6 @@ class _LoginViewState extends State<LoginView> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text("TO DO LIST"),
-          toolbarHeight: 230,
-          backgroundColor: const Color.fromARGB(255, 164, 154, 239),
-        ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -54,16 +49,16 @@ class _LoginViewState extends State<LoginView> {
                     height: 50,
                   ),
                   const Icon(
-                    Icons.emoji_people_sharp,
-                    size: 120,
+                    Icons.find_in_page,
+                    size: 50,
                     color: Color.fromARGB(255, 164, 154, 239),
                   ),
                   const SizedBox(
                     height: 30,
                   ),
                   TextField(
-                    controller: uId,
-                    decoration: const InputDecoration(labelText: 'ID를 입력하세요.'),
+                    controller: uNameField,
+                    decoration: const InputDecoration(labelText: '이름을 입력하세요.'),
                     keyboardType: TextInputType.text,
                     onChanged: (value) {},
                   ),
@@ -71,8 +66,9 @@ class _LoginViewState extends State<LoginView> {
                     height: 10,
                   ),
                   TextField(
-                    controller: uPw,
-                    decoration: const InputDecoration(labelText: 'PW를 입력하세요.'),
+                    controller: uEmailField,
+                    decoration:
+                        const InputDecoration(labelText: 'email을 입력하세요.'),
                     keyboardType: TextInputType.text,
                     obscureText: true,
                     onChanged: (value) {},
@@ -85,20 +81,20 @@ class _LoginViewState extends State<LoginView> {
                       primary: const Color.fromARGB(255, 164, 154, 239),
                     ),
                     onPressed: () {
-                      if (uId.text.trim().isEmpty) {
-                        emptyID(context);
-                      } else if (uPw.text.trim().isEmpty) {
-                        emptyPW(context);
+                      if (uNameField.text.trim().isEmpty) {
+                        emptyName(context);
+                      } else if (uEmailField.text.trim().isEmpty) {
+                        emptyEmail(context);
                       } else {
                         setState(() {
-                          userID = uId.text.trim();
-                          userPW = uPw.text.trim();
+                          uName = uNameField.text.trim();
+                          uEmail = uEmailField.text.trim();
                         });
-                        getJSONData().then((value) => logInCheck(context));
+                        getJSONData().then((value) => findIDCheck(context));
                         // data 오류
                       }
                     },
-                    child: const Text('Log in'),
+                    child: const Text('ID 찾기'),
                   ),
                   const SizedBox(
                     height: 30,
@@ -109,21 +105,9 @@ class _LoginViewState extends State<LoginView> {
                       const Text('아직 회원이 아니신가요?'),
                       TextButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, '/signin');
+                          // Navigator.pushNamed(context, '/signin');
                         },
                         child: const Text('회원가입 하기'),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text('ID를 잊으셨나요?'),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/find');
-                        },
-                        child: const Text('ID, PW 찾기'),
                       ),
                     ],
                   ),
@@ -137,20 +121,20 @@ class _LoginViewState extends State<LoginView> {
   }
 
   // Functions
-  emptyID(BuildContext context) {
+  emptyName(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('ID를 입력하세요.'),
+        content: Text('이름을 입력하세요.'),
         duration: Duration(seconds: 1),
         backgroundColor: Colors.red,
       ),
     );
   }
 
-  emptyPW(BuildContext context) {
+  emptyEmail(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('PW를 입력하세요.'),
+        content: Text('email을 입력하세요.'),
         duration: Duration(seconds: 1),
         backgroundColor: Colors.red,
       ),
@@ -160,30 +144,31 @@ class _LoginViewState extends State<LoginView> {
   Future<bool> getJSONData() async {
     // 비동기 방식 async : 동시에 실행되고
     var url = Uri.parse(
-        'http://localhost:8080/flutter/todolist_semi/todolist_user_select.jsp?uId=$userID&uPw=$userPW');
+        'http://localhost:8080/flutter/todolist_semi/todolist_findID_select.jsp?uName=$uName&uEmail=$uEmail');
     var response = await http.get(url);
     // await, build가 data를 기다림
     // get 방식
     var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
     // body 자체로는 decode하지 못한다 : bodyBytes
     List result = dataConvertedJSON['results'];
-    // 행렬의 형태로 result에 저장한다. [2,4]
+    // 행렬의 형태로 result에 저장한다.
 
     setState(() {
       data = []; // 초기화 안하면 계속 누적되어서 출력된다.
       data.addAll(result);
+      uId = data[0]['uId'];
     });
     return true;
   }
 
-  logInCheck(BuildContext context) {
+  findIDCheck(BuildContext context) {
     showDialog(
         context: context,
         builder: (BuildContext ctx) {
-          if (data.isEmpty) {
+          if (uId.isEmpty) {
             return AlertDialog(
               title: const Text(
-                '로그인 실패!',
+                'ID 찾기 실패!',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
@@ -200,20 +185,17 @@ class _LoginViewState extends State<LoginView> {
           } else {
             return AlertDialog(
               title: const Text(
-                '로그인 성공!',
+                'ID 찾기 성공!',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              content: const Text('로그인에 성공하였습니다.'),
+              content: Text('가입하신 ID는 $uId입니다.'),
               actions: [
                 ElevatedButton(
                     onPressed: () {
-                      Message.userid = 'root';
-                      Message.userpw = 'qwer1234';
-                      Message.username = 'gaseul';
-                      Message.useremail = 'julietmf@naver.com';
-                      Navigator.popAndPushNamed(context, '/drawer');
+                      Navigator.pop(context);
+                      // Navigator.push(context, MaterialPageRoute(builder: (context)=>));
                     },
                     child: const Text('OK'))
               ],

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todolist/part_A/SM/signin.dart';
+import 'package:todolist/part_A/siwoong/findMain.dart';
 import 'package:todolist/part_A/siwoong/loginview.dart';
 
 void main() {
@@ -14,8 +16,12 @@ class MyApp extends StatelessWidget {
       routes: {
         // part_A
         '/login': (context) => const LoginView(),
+        '/signin': (context) => const Signin(),
+        '/find': (context) => const FindMain(),
 
         // part_B
+        // 가슬님것 시작부분 까지만 제가(시웅) 해놓고 나머지는 채워주세요
+        '/drawer': (context) => const Drawer(),
 
         // part_C
       },
