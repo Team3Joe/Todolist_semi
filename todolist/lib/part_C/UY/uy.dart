@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 
 import 'package:todolist/part_C/UY/list_item.dart';
 
+import '../../message.dart';
+import '../../part_B/GS/myPage.dart';
+
 class ListPage extends StatefulWidget {
   const ListPage({Key? key}) : super(key: key);
 
@@ -13,20 +16,33 @@ class ListPage extends StatefulWidget {
   State<ListPage> createState() => _ListPageState();
 }
 
-class _ListPageState extends State<ListPage> {
+class _ListPageState extends State<ListPage> 
+    with SingleTickerProviderStateMixin {
+
   late List todolist;
   bool checkValue = false;
   bool trueyo = true;
   bool falseyo = false;
   late String result;
 
+  late AnimationController _controller;
+  late String id;
+  late List data = [];
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     todolist = [];
-
+  _controller = AnimationController(vsync: this);
+    id = Message.userid;
     getJSONData();
+  }
+
+   @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
   }
 
   @override
@@ -103,6 +119,44 @@ class _ListPageState extends State<ListPage> {
                   );
                 },
               ), //Lb
+      ),
+      drawer: Drawer(
+        child: ListView(
+          //패딩 없이 꽉 채우기
+          padding: EdgeInsets.zero,
+          children: [
+            const UserAccountsDrawerHeader(
+              //상단에 이미지 넣기
+
+              //이미지 밑에 이름 & 이메일
+              accountName: Text('name'),
+              accountEmail: Text('email@naver.com'),
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 164, 154, 239),
+                //테두리, 값을 각각 줄 수 있음. all 은 한번에 다 뜸
+              ),
+            ),
+
+            // 리스트
+            ListTile(
+              onTap: () {
+                setState(() {
+                  getJSONDataDrawer();
+                });
+
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: ((BuildContext context) => MyPage())));
+              },
+              leading: const Icon(
+                Icons.home,
+                color: Colors.deepPurple,
+              ),
+              title: const Text('My Page'),
+            ),
+          ],
+        ),
       ), //Center,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color.fromARGB(255, 164, 154, 239),
@@ -114,6 +168,26 @@ class _ListPageState extends State<ListPage> {
       ),
     );
   }
+
+  Future<bool> getJSONDataDrawer() async {
+    // 비동기 방식 async : 동시에 실행되고
+    var url = Uri.parse('http://localhost:8080/Flutter/user_query.jsp');
+    var response = await http.get(url);
+    // await, build가 data를 기다림
+    // get 방식
+    var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+    // body 자체로는 decode하지 못한다 : bodyBytes
+    List result = dataConvertedJSON['results'];
+    // 행렬의 형태로 result에 저장한다. [2,4]
+
+    setState(() {
+      data.addAll(result);
+    });
+    print(data);
+    print(data[0]['pw']);
+    return true;
+  }
+
 
   Future<bool> getJSONData() async {
     //비동기 함수 == 작업하면서 화면구성도 같이하겠다!
