@@ -15,6 +15,7 @@ class ListPage extends StatefulWidget {
 
 class _ListPageState extends State<ListPage> {
   late List todolist;
+  bool checkValue = false;
 
   @override
   void initState() {
@@ -53,6 +54,16 @@ class _ListPageState extends State<ListPage> {
                                 children: [
                                   Row(
                                     children: [
+                                      Checkbox(
+                                        value: todolist[index]['check'] == '1'
+                                            ? false
+                                            : true,
+                                        onChanged: (check) {
+                                          setState(() {
+                                            checkValue = check!;
+                                          });
+                                        },
+                                      ),
                                       Text("content : "),
                                       Text(
                                         todolist[index]['content'],
@@ -82,7 +93,8 @@ class _ListPageState extends State<ListPage> {
         backgroundColor: Color.fromARGB(255, 164, 154, 239),
         child: const Icon(Icons.add),
         onPressed: () {
-          //
+          //WritePage로 이동
+          Navigator.pushNamed(context, "/write");
         },
       ),
     );
