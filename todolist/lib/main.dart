@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:todolist/part_A/siwoong/loginview.dart';
 import 'package:todolist/part_C/UY/uy.dart';
 
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
 
         // part_C
         '/list': (context) => const ListPage(),
+        '/write': (context) => const WritePage(),
       },
       initialRoute: '/list',
     );
