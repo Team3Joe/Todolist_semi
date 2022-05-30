@@ -209,11 +209,11 @@ class _LoginViewState extends State<LoginView> {
               actions: [
                 ElevatedButton(
                     onPressed: () {
-                      Message.userid = 'root';
-                      Message.userpw = 'qwer1234';
-                      Message.username = 'gaseul';
-                      Message.useremail = 'julietmf@naver.com';
-                      Navigator.popAndPushNamed(context, '/drawer');
+                      Message.userid = data[0]['uId'];
+                      Message.userpw = data[0]['uPw'];
+                      Message.username = data[0]['uName'];
+                      Message.useremail = data[0]['uEmail'];
+                      Navigator.popAndPushNamed(context, '/list');
                     },
                     child: const Text('OK'))
               ],
