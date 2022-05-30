@@ -28,63 +28,82 @@ class _LoginViewState extends State<LoginView> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('To-do list'),
+          title: const Text("TO DO LIST"),
+          toolbarHeight: 230,
+          backgroundColor: const Color.fromARGB(255, 164, 154, 239),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Center(
-            child: Column(
-              children: [
-                Image.asset(
-                  'images/blueScreen.png',
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-                const Icon(
-                  Icons.emoji_people_sharp,
-                  size: 120,
-                  color: Colors.cyan,
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                TextField(
-                  controller: uId,
-                  decoration: const InputDecoration(labelText: 'ID를 입력하세요.'),
-                  keyboardType: TextInputType.text,
-                  onChanged: (value) {},
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                  controller: uPw,
-                  decoration: const InputDecoration(labelText: 'PW를 입력하세요.'),
-                  keyboardType: TextInputType.text,
-                  obscureText: true,
-                  onChanged: (value) {},
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    if (uId.text.trim().isEmpty) {
-                      emptyID(context);
-                    } else if (uPw.text.trim().isEmpty) {
-                      emptyPW(context);
-                    } else if (uId.text.trim() != 'root') {
-                      wrongID(context);
-                    } else if (uPw.text.trim() != 'qwer1234') {
-                      wrongPW(context);
-                    } else {
-                      logInSuccess(context);
-                    }
-                  },
-                  child: const Text('Log in'),
-                ),
-              ],
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Center(
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  const Icon(
+                    Icons.emoji_people_sharp,
+                    size: 120,
+                    color: Color.fromARGB(255, 164, 154, 239),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  TextField(
+                    controller: uId,
+                    decoration: const InputDecoration(labelText: 'ID를 입력하세요.'),
+                    keyboardType: TextInputType.text,
+                    onChanged: (value) {},
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextField(
+                    controller: uPw,
+                    decoration: const InputDecoration(labelText: 'PW를 입력하세요.'),
+                    keyboardType: TextInputType.text,
+                    obscureText: true,
+                    onChanged: (value) {},
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: const Color.fromARGB(255, 164, 154, 239),
+                    ),
+                    onPressed: () {
+                      if (uId.text.trim().isEmpty) {
+                        emptyID(context);
+                      } else if (uPw.text.trim().isEmpty) {
+                        emptyPW(context);
+                      } else if (uId.text.trim() != 'root') {
+                        wrongID(context);
+                      } else if (uPw.text.trim() != 'qwer1234') {
+                        wrongPW(context);
+                      } else {
+                        logInSuccess(context);
+                      }
+                    },
+                    child: const Text('Log in'),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text('아직 회원이 아니신가요?'),
+                      TextButton(
+                        onPressed: () {
+                          // Navigator.pushNamed(context, '/signin');
+                        },
+                        child: const Text('회원가입 하기'),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -97,7 +116,7 @@ class _LoginViewState extends State<LoginView> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('ID를 입력하세요.'),
-        duration: Duration(milliseconds: 250),
+        duration: Duration(seconds: 1),
         backgroundColor: Colors.red,
       ),
     );
@@ -107,7 +126,7 @@ class _LoginViewState extends State<LoginView> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('PW를 입력하세요.'),
-        duration: Duration(milliseconds: 250),
+        duration: Duration(seconds: 1),
         backgroundColor: Colors.red,
       ),
     );
@@ -117,7 +136,7 @@ class _LoginViewState extends State<LoginView> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('등록된 ID를 입력하세요.'),
-        duration: Duration(milliseconds: 250),
+        duration: Duration(seconds: 1),
         backgroundColor: Colors.red,
       ),
     );
@@ -126,9 +145,9 @@ class _LoginViewState extends State<LoginView> {
   wrongPW(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('ID에 맞는 PW를 입력하세요.'),
-        duration: Duration(milliseconds: 250),
-        backgroundColor: Colors.yellow,
+        content: Text('PW를 확인해주세요.'),
+        duration: Duration(seconds: 1),
+        backgroundColor: Colors.amber,
       ),
     );
   }
@@ -149,6 +168,7 @@ class _LoginViewState extends State<LoginView> {
               ElevatedButton(
                   onPressed: () {
                     Navigator.pop(context);
+                    // Navigator.pushNamed(context, '/list');
                   },
                   child: const Text('OK'))
             ],
