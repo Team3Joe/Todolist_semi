@@ -101,7 +101,7 @@ class _ListPageState extends State<ListPage> {
         child: const Icon(Icons.add),
         onPressed: () {
           //WritePage로 이동
-          Navigator.pushNamed(context, "/write");
+          Navigator.pushNamed(context, "/write").then((value) => getJSONData());
         },
       ),
     );

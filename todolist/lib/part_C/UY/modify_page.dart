@@ -64,6 +64,18 @@ class _ModifyPageState extends State<ModifyPage> {
                     child: const Text('확인', style: TextStyle(fontSize: 15)),
                   ),
                 ),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      code = ListItem.code;
+                    });
+                    deleteAction();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Color.fromARGB(255, 142, 87, 236),
+                  ),
+                  child: const Text('삭제', style: TextStyle(fontSize: 15)),
+                ),
               ],
             ),
           ],
@@ -73,7 +85,7 @@ class _ModifyPageState extends State<ModifyPage> {
         backgroundColor: Color.fromARGB(255, 164, 154, 239),
         child: const Icon(Icons.arrow_back),
         onPressed: () {
-          //
+          Navigator.pushNamed(context, '/list');
         },
       ),
     );
@@ -95,6 +107,22 @@ class _ModifyPageState extends State<ModifyPage> {
     }
   }
 
+  deleteAction() async {
+    var url = Uri.parse(
+        'http://localhost:8080/Flutter/todolist_delete.jsp?lCode=$code');
+    var response = await http.get(url);
+    var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+    setState(() {
+      result = dataConvertedJSON['result'];
+    });
+    print(result);
+    if (result == 'OK') {
+      _showDialogDelete(context);
+    } else {
+      errorSnackBar(context);
+    }
+  }
+
   _showDialog(BuildContext context) {
     showDialog(
         context: context,
@@ -102,6 +130,26 @@ class _ModifyPageState extends State<ModifyPage> {
           return AlertDialog(
             title: const Text('입력 결과'),
             content: const Text('입력이 완료 되었습니다.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(ctx).pop();
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        });
+  }
+
+  _showDialogDelete(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext ctx) {
+          return AlertDialog(
+            title: const Text('삭제결과'),
+            content: const Text('삭제가 완료 되었습니다.'),
             actions: [
               TextButton(
                 onPressed: () {

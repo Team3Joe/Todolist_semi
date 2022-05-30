@@ -50,6 +50,7 @@ class _WritePageState extends State<WritePage> {
                   child: ElevatedButton(
                     onPressed: () {
                       content = write.text;
+                      insertAction();
                     },
                     style: ElevatedButton.styleFrom(
                       primary: Color.fromARGB(255, 142, 87, 236),
@@ -63,7 +64,6 @@ class _WritePageState extends State<WritePage> {
                     onPressed: () {
                       setState(() {
                         write.text = '';
-                        insertAction();
                       });
                     },
                     style: ElevatedButton.styleFrom(
@@ -105,7 +105,7 @@ class _WritePageState extends State<WritePage> {
   _showDialog(BuildContext context) {
     showDialog(
         context: context,
-        builder: (BuildContext context) {
+        builder: (BuildContext ctx) {
           return AlertDialog(
             title: const Text('입력 결과'),
             content: const Text('입력이 완료 되었습니다.'),
@@ -113,6 +113,7 @@ class _WritePageState extends State<WritePage> {
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
+                  Navigator.of(ctx).pop();
                 },
                 child: const Text('OK'),
               ),
