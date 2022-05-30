@@ -16,6 +16,9 @@ class ListPage extends StatefulWidget {
 class _ListPageState extends State<ListPage> {
   late List todolist;
   bool checkValue = false;
+  bool trueyo =  true;
+  bool falseyo = false;
+  late String result;
 
   @override
   void initState() {
@@ -58,29 +61,37 @@ class _ListPageState extends State<ListPage> {
                                         value: todolist[index]['check'] == '1'
                                             ? false
                                             : true,
-                                        onChanged: (check) {
+                                        onChanged: (value) {
+                        
                                           setState(() {
-                                            checkValue = check!;
+                                                     if(value == true){
+                                               todolist[index]['check'] = '0';
+                                                
+                                                 updateCheckboxAction(index);
+                                               
+                                            }else{
+                                               todolist[index]['check'] = '1';
+                                                updateCheckboxAction(index);
+                                                   
+                                            }
+                                            
+                                  
+                                          
+                                            
                                           });
+                                
+                                          
+                                
+
                                         },
                                       ),
-                                      Text("content : "),
+
                                       Text(
                                         todolist[index]['content'],
                                       ),
                                     ],
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      children: [
-                                        Text("check : "),
-                                        Text(
-                                          todolist[index]['check'],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                     
                                 ],
                               ),
                             ),
@@ -128,4 +139,49 @@ class _ListPageState extends State<ListPage> {
     //print(response.body);
     return true;
   }
+
+  updateCheckboxAction(index) async {
+    var url = Uri.parse(
+        'http://localhost:8080/Flutter/todolist_update_checkBox.jsp?check=${todolist[index]['check']}&lCode=${todolist[index]['code']}'
+        );
+    var response = await http.get(url);
+    setState(() {
+      var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+      result = dataConvertedJSON['result'];
+    });
+    if (result == 'OK') {
+      _showDialog(context);
+    } else {
+      errorSnackBar(context);
+    }
+  }
+ _showDialog(BuildContext context){
+    showDialog(
+      context: context, 
+      builder: (BuildContext context){
+        return AlertDialog(
+          title: const Text('수정 결과'),
+          content: const Text('수정이 완료 되었습니다.'),
+          actions: [
+            TextButton(
+              onPressed: (){
+                Navigator.of(context).pop();
+              } 
+            , child: const Text('OK'),),
+          ],
+        );
+      });
+  }
+
+  errorSnackBar(BuildContext context){
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar( 
+      content: Text('사용자 정보 입력에 문제가 발생 하였습니다.'),
+      duration: Duration(seconds: 2),
+      backgroundColor: Colors.red,
+      ),
+    );
+
+  }
+
 }//end
