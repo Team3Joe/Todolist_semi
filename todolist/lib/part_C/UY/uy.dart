@@ -23,7 +23,6 @@ class _ListPageState extends State<ListPage> {
     todolist = [];
 
     getJSONData();
-
   }
 
   @override
@@ -34,7 +33,7 @@ class _ListPageState extends State<ListPage> {
         toolbarHeight: 200,
         backgroundColor: const Color.fromARGB(255, 164, 154, 239),
       ),
-     body: Center(
+      body: Center(
           child: todolist.isEmpty
               ? const Text("데이터가 없습니다.")
               : ListView.builder(
@@ -42,30 +41,38 @@ class _ListPageState extends State<ListPage> {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                      // Massage.code = data[index]['code'];
-                      // Navigator.pushNamed(context, '/1st');
-                     
+                        // Massage.code = data[index]['code'];
+                        // Navigator.pushNamed(context, '/1st');
                       },
                       child: Card(
                         child: Column(
                           children: [
-               
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 children: [
                                   Row(
-                          children: [
-                                  Text("content : "),
-                                  Text(
-                                    todolist[index]['content'],
+                                    children: [
+                                      Text("content : "),
+                                      Text(
+                                        todolist[index]['content'],
+                                      ),
+                                    ],
                                   ),
-                          ],
-                        ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Text("check : "),
+                                        Text(
+                                          todolist[index]['check'],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
-         
                           ],
                         ),
                       ),
@@ -104,10 +111,6 @@ class _ListPageState extends State<ListPage> {
       //불러오고 수정한값을 이제 넣어주자!
       todolist.addAll(result);
       //print(data[0]['code']); //flutter: S001
-      print(todolist[1]['code']);
-
-      print(todolist[1]['content']);
-
     });
 
     //print(response.body);
