@@ -50,10 +50,10 @@ class _ListPageState extends State<ListPage> {
                       // Navigator.pushNamed(context, '/1st');
 
                       setState(() {
-                        ListItem.code = todolist[index]['code'];
-                        ListItem.content = todolist[index]['content'];
                         Navigator.pushNamed(context, '/modify')
                             .then((value) => getJSONData());
+                        ListItem.code = todolist[index]['code'];
+                        ListItem.content = todolist[index]['content'];
                       });
                     },
                     child: Card(

@@ -61,7 +61,7 @@ class _ModifyPageState extends State<ModifyPage> {
                     style: ElevatedButton.styleFrom(
                       primary: Color.fromARGB(255, 142, 87, 236),
                     ),
-                    child: const Text('확인', style: TextStyle(fontSize: 15)),
+                    child: const Text('수정', style: TextStyle(fontSize: 15)),
                   ),
                 ),
                 ElevatedButton(

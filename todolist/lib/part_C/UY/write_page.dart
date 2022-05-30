@@ -39,7 +39,7 @@ class _WritePageState extends State<WritePage> {
               child: TextField(
                 controller: write,
                 keyboardType: TextInputType.text,
-                decoration: InputDecoration(labelText: "할일을 적어주세요"),
+                decoration: const InputDecoration(labelText: "할일을 적어주세요"),
               ),
             ),
             Row(
