@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:todolist/part_B/YJ/drawer.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -18,6 +19,7 @@ class _LoginViewState extends State<LoginView> {
   late String userPW;
 
   late List data;
+  late String id;
 
   @override
   void initState() {
@@ -28,6 +30,7 @@ class _LoginViewState extends State<LoginView> {
     userPW = '';
 
     data = [];
+    id = 'root';
   }
 
   @override
@@ -94,7 +97,6 @@ class _LoginViewState extends State<LoginView> {
                         });
                         getJSONData();
                         // data 오류
-                        print(data);
                         logInCheck(context);
                       }
                     },
@@ -173,7 +175,6 @@ class _LoginViewState extends State<LoginView> {
       data = []; // 초기화 안하면 계속 누적되어서 출력된다.
       data.addAll(result);
     });
-    print(data);
     return true;
   }
 
@@ -209,9 +210,10 @@ class _LoginViewState extends State<LoginView> {
               content: const Text('로그인에 성공하였습니다.'),
               actions: [
                 ElevatedButton(
+                  
                     onPressed: () {
                       Navigator.pop(context);
-                      // Navigator.push(context, MaterialPageRoute(builder: (context)=>));
+                      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=> const DrawerPage()));
                     },
                     child: const Text('OK'))
               ],

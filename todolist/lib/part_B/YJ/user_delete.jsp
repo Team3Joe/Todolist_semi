@@ -6,10 +6,6 @@
 
 request.setCharacterEncoding("utf-8");
 String id = request.getParameter("id");
-String pw = request.getParameter("pw");
-String phone = request.getParameter("phone");
-String email = request.getParameter("email");
-String birth = request.getParameter("birth");
 
  String url_mysql = "jdbc:mysql://localhost/todolist?serverTimezone=UTC&characterEncoding=utf8&useSSL=FALSE";
  String id_mysql = "root";
@@ -22,7 +18,7 @@ try{
     Connection conn_mysql = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
     Statement stmt_mysql = conn_mysql.createStatement();
 
-    String act1 = "delete from student where uId=?";
+    String act1 = "delete from user where uId=?";
 
     ps = conn_mysql.prepareStatement(act1);
     ps.setString(1, id);

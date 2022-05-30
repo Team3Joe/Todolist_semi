@@ -17,15 +17,13 @@ class _UpdateState extends State<Update> {
   //Property
   late TextEditingController idController;
   late TextEditingController pwController;
-  late TextEditingController phoneController;
+  late TextEditingController nameController;
   late TextEditingController emailController;
-  late TextEditingController birthController;
 
   late String id;
   late String pw;
-  late String phone;
+  late String name;
   late String email;
-  late String birth;
   late String result;
 
   @override
@@ -33,15 +31,13 @@ class _UpdateState extends State<Update> {
     super.initState();
     idController = TextEditingController();
     pwController = TextEditingController();
-    phoneController = TextEditingController();
+    nameController = TextEditingController();
     emailController = TextEditingController();
-    birthController = TextEditingController();
 
     idController.text=Message.userid;
     pwController.text=Message.userpw;
-    phoneController.text=Message.userphone;
+    nameController.text=Message.username;
     emailController.text=Message.useremail;
-    birthController.text=Message.userbirth;
 
     result = '';
   }
@@ -49,7 +45,7 @@ class _UpdateState extends State<Update> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Update for CRUD'),
+        title: const Text('To Do List'),
       ),
       body: Center(
         child: Column(
@@ -70,7 +66,7 @@ class _UpdateState extends State<Update> {
                   keyboardType: TextInputType.text,
                 ),
                 TextField(
-                  controller: phoneController,
+                  controller: nameController,
                   decoration: const InputDecoration(
                     labelText: '전화번호',
                   ),
@@ -83,16 +79,7 @@ class _UpdateState extends State<Update> {
                   ),
                   keyboardType: TextInputType.text,
                 ),
-                TextField(
-                  controller: birthController,
-                  decoration: const InputDecoration(
-                    labelText: '생년월일',
-                  ),
-                  keyboardType: TextInputType.number,
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
+                
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -100,9 +87,8 @@ class _UpdateState extends State<Update> {
                       onPressed: () {
                         id = idController.text;
                         pw = pwController.text;
-                        phone = phoneController.text;
+                        name = nameController.text;
                         email = emailController.text;
-                        birth = birthController.text;
                         updateAction();
                         
                         
@@ -115,10 +101,9 @@ class _UpdateState extends State<Update> {
                     ElevatedButton(
                   onPressed: () {
                     id = idController.text;
-                    pw = pwController.text;
-                    phone = phoneController.text;
-                    email = emailController.text;
-                    birth = birthController.text;
+                        pw = pwController.text;
+                        name = nameController.text;
+                        email = emailController.text;
                     deleteAction();
                     
                   },
@@ -136,7 +121,7 @@ class _UpdateState extends State<Update> {
 //--- functions
   updateAction() async {
     var url = Uri.parse(
-        'http://localhost:8080/Flutter/user_update.jsp?id=$id&pw=$pw&phone=$phone&email=$email&birth=$birth');
+        'http://localhost:8080/Flutter/user_update.jsp?id=$id&pw=$pw&name=$name&email=$email');
     var response = await http.get(url);
     setState(() {
       var dataCovertedJSON = json.decode(utf8.decode(response.bodyBytes));
@@ -151,7 +136,7 @@ class _UpdateState extends State<Update> {
 
   deleteAction() async {
     var url = Uri.parse(
-        'http://localhost:8080/Flutter/user_delete.jsp?id=$id&pw=$pw&phone=$phone&email=$email&birth=$birth');
+        'http://localhost:8080/Flutter/user_delete.jsp?id=$id&pw=$pw&name=$name&email=$email');
     var response = await http.get(url);
     setState(() {
       var dataCovertedJSON = json.decode(utf8.decode(response.bodyBytes));

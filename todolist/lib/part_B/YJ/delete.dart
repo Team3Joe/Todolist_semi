@@ -39,9 +39,8 @@ class _DeleteState extends State<Delete> {
 
     idController.text=Message.userid;
     pwController.text=Message.userpw;
-    phoneController.text=Message.userphone;
+    phoneController.text=Message.username;
     emailController.text=Message.useremail;
-    birthController.text=Message.userbirth;
 
     result = '';
   }

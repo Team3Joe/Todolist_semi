@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
-import 'message.dart';
+import 'package:todolist/part_B/YJ/message.dart';
 
 class MyPage extends StatefulWidget {
+
   const MyPage({Key? key}) : super(key: key);
 
   @override
@@ -13,8 +13,7 @@ class MyPage extends StatefulWidget {
 }
 
 class _MyPageState extends State<MyPage> {
-  //property
-   //Property
+  //Property
   late TextEditingController idController;
   late TextEditingController pwController;
   late TextEditingController nameController;
@@ -25,23 +24,30 @@ class _MyPageState extends State<MyPage> {
   late String name;
   late String email;
   late String result;
+  late List data;
 
   @override
   void initState() {
     super.initState();
+    data = [];
+    // data 가져오기
+    getJSONData(); // 함수 만들기
+
     idController = TextEditingController();
     pwController = TextEditingController();
     nameController = TextEditingController();
     emailController = TextEditingController();
 
-    idController.text = Message.userid;
-    pwController.text = Message.userpw;
-    nameController.text = Message.userphone;
-    emailController.text = Message.useremail;
+    setState(() {
+    idController.text=Message.userid;
+    pwController.text=Message.userpw;
+    nameController.text=Message.username;
+    emailController.text=Message.useremail;
+    });
+    
 
     result = '';
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -49,12 +55,14 @@ class _MyPageState extends State<MyPage> {
       appBar: AppBar(
         title: const Text("My Page"),
         toolbarHeight: 230,
-        backgroundColor:const Color.fromARGB(255, 164, 154, 239),
+        backgroundColor: const Color.fromARGB(255, 164, 154, 239),
       ),
       body: Center(
         child: Column(
           children: [
-            const SizedBox(height: 40,),
+            const SizedBox(
+              height: 40,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -78,7 +86,6 @@ class _MyPageState extends State<MyPage> {
                         padding: EdgeInsets.fromLTRB(0, 0, 0, 40),
                         child: Text('이메일 :'),
                       ),
-                      
                     ],
                   ),
                 ),
@@ -114,7 +121,7 @@ class _MyPageState extends State<MyPage> {
                               ),
                             ),
                             controller: idController,
-                            keyboardType: TextInputType.emailAddress,
+                            keyboardType: TextInputType.text,
                           )),
                     ),
                     SizedBox(
@@ -146,7 +153,7 @@ class _MyPageState extends State<MyPage> {
                               ),
                             ),
                             controller: pwController,
-                            keyboardType: TextInputType.emailAddress,
+                            keyboardType: TextInputType.text,
                           )),
                     ),
                     SizedBox(
@@ -178,7 +185,7 @@ class _MyPageState extends State<MyPage> {
                               ),
                             ),
                             controller: nameController,
-                            keyboardType: TextInputType.emailAddress,
+                            keyboardType: TextInputType.text,
                           )),
                     ),
                     SizedBox(
@@ -213,18 +220,23 @@ class _MyPageState extends State<MyPage> {
                             keyboardType: TextInputType.emailAddress,
                           )),
                     ),
-                    
                   ],
                 ),
               ],
             ),
-            const SizedBox(height: 70,),
+            const SizedBox(
+              height: 70,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    //
+                    Message.userid = idController.text;
+                    Message.userpw = pwController.text;
+                    Message.username = nameController.text;
+                    Message.useremail = emailController.text;
+                    updateAction();
                   },
                   style: ElevatedButton.styleFrom(
                       primary: const Color.fromARGB(255, 164, 154, 239),
@@ -234,10 +246,13 @@ class _MyPageState extends State<MyPage> {
                     '수정',
                   ),
                 ),
-                const SizedBox(width: 20,),
-               ElevatedButton(
+                const SizedBox(
+                  width: 20,
+                ),
+                ElevatedButton(
                   onPressed: () {
-                    //
+                    id = idController.text;
+                    deleteAction();
                   },
                   style: ElevatedButton.styleFrom(
                       primary: const Color.fromARGB(255, 164, 154, 239),
@@ -254,8 +269,6 @@ class _MyPageState extends State<MyPage> {
       ),
     );
   }
-
-
 
 //functions
   updateAction() async {
@@ -275,7 +288,7 @@ class _MyPageState extends State<MyPage> {
 
   deleteAction() async {
     var url = Uri.parse(
-        'http://localhost:8080/Flutter/user_delete.jsp?id=$id&pw=$pw&name=$name&email=$email');
+        'http://localhost:8080/Flutter/user_delete.jsp?id=$id');
     var response = await http.get(url);
     setState(() {
       var dataCovertedJSON = json.decode(utf8.decode(response.bodyBytes));
@@ -309,6 +322,7 @@ class _MyPageState extends State<MyPage> {
   }
 
   errorSnackBar(BuildContext context) {
+
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('문제가 발생 하였습니다.'),
@@ -318,4 +332,20 @@ class _MyPageState extends State<MyPage> {
     );
   }
 
+
+  Future<bool> getJSONData() async {
+    // 비동기 방식 async : 동시에 실행되고
+    data.clear();
+    var url =
+        Uri.parse('http://localhost:8080/Flutter/user_query.jsp');
+    var response = await http.get(url); // await, build가 data를 기다림
+
+    setState(() {
+      var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+      List result = dataConvertedJSON['results'];
+      data.addAll(result); // list 한번에 다 넣을거야
+    });
+
+    return true;
+  }
 }

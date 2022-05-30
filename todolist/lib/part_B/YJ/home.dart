@@ -49,18 +49,16 @@ class _HomeState extends State<Home> {
                       onTap: () {
                         Message.userid = data[index]['id'];
                         Message.userpw = data[index]['pw'];
-                        Message.userphone = data[index]['phone'];
+                        Message.username = data[index]['name'];
                         Message.useremail = data[index]['email'];
-                        Message.userbirth = data[index]['birth'];
                         Navigator.pushNamed(context, '/update')
                             .then((value) => getJSONData());
                       },
                       onLongPress: () {
                         Message.userid = data[index]['id'];
                         Message.userpw = data[index]['pw'];
-                        Message.userphone = data[index]['phone'];
+                        Message.username = data[index]['name'];
                         Message.useremail = data[index]['email'];
-                        Message.userbirth = data[index]['birth'];
                         Navigator.pushNamed(context, '/delete')
                             .then((value) => getJSONData());
                       },

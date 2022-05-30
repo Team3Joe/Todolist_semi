@@ -10,7 +10,7 @@
  String id_mysql = "root";
  String pw_mysql = "qwer1234";
 
- String whereDefault = "select uId, uPw, uPhone, uEmail, uBirth from user";
+ String whereDefault = "select uPw, uName, uEmail from user where uId=?";
 
 JSONObject jsonList = new JSONObject();
 JSONArray itemList = new JSONArray();
@@ -24,11 +24,10 @@ try{
 
     while(rs.next()){
         JSONObject tempJson = new JSONObject();
-        tempJson.put("id",rs.getString(1));
-        tempJson.put("pw",rs.getString(2));
-        tempJson.put("phone",rs.getString(3));
-        tempJson.put("email",rs.getString(4));
-        tempJson.put("birth",rs.getString(5));
+        tempJson.put("pw",rs.getString(1));
+        tempJson.put("name",rs.getString(2));
+        tempJson.put("email",rs.getString(3));
+        tempJson.put("id",rs.getString(4));
         itemList.add(tempJson);
     }
 

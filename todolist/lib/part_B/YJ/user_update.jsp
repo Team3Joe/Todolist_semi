@@ -7,9 +7,8 @@
 request.setCharacterEncoding("utf-8");
 String id = request.getParameter("id");
 String pw = request.getParameter("pw");
-String phone = request.getParameter("phone");
+String phone = request.getParameter("name");
 String email = request.getParameter("email");
-String birth = request.getParameter("birth");
 
  String url_mysql = "jdbc:mysql://localhost/todolist?serverTimezone=UTC&characterEncoding=utf8&useSSL=FALSE";
  String id_mysql = "root";
@@ -22,14 +21,13 @@ try{
     Connection conn_mysql = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
     Statement stmt_mysql = conn_mysql.createStatement();
 
-    String act1 = "update user set uPw=?, uPhone=?, uEmail=?, uBirth=? where uId = ?";
+    String act1 = "update user set uPw=?, uName=?, uEmail=? where uId = ?";
 
     ps = conn_mysql.prepareStatement(act1);
     ps.setString(1, pw);
-    ps.setString(2, phone);
+    ps.setString(2, name);
     ps.setString(3, email);
-    ps.setString(4, birth);
-    ps.setString(5, id);
+    ps.setString(4, id);
 
     ps.executeUpdate();
     conn_mysql.close();
