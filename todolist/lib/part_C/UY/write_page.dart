@@ -1,11 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:http/http.dart' as http;
 import 'package:todolist/message.dart';
-import 'package:todolist/part_C/UY/list_item.dart';
 
 class WritePage extends StatefulWidget {
   const WritePage({Key? key}) : super(key: key);
@@ -56,7 +53,7 @@ class _WritePageState extends State<WritePage> {
                       insertAction();
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Color.fromARGB(255, 142, 87, 236),
+                      primary: const Color.fromARGB(255, 142, 87, 236),
                     ),
                     child: const Text('확인', style: TextStyle(fontSize: 15)),
                   ),
@@ -81,7 +78,7 @@ class _WritePageState extends State<WritePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color.fromARGB(255, 164, 154, 239),
+        backgroundColor: const Color.fromARGB(255, 164, 154, 239),
         child: const Icon(Icons.arrow_back),
         onPressed: () {
           //
