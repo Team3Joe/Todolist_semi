@@ -69,7 +69,7 @@ class _ListPageState extends State<ListPage>
                             .then((value) => getJSONData());
                         ListItem.code = todolist[index]['code'];
                         ListItem.content = todolist[index]['content'];
-                        ListItem.uid = todolist[index]['uid'];
+                        Message.userid = todolist[index]['uid'];
                       });
                     },
                     child: Card(
@@ -192,8 +192,8 @@ class _ListPageState extends State<ListPage>
     //비동기 함수 == 작업하면서 화면구성도 같이하겠다!
     //이럴땐 (주소) var를 많이 씀.
     todolist.clear();
-    var url =
-        Uri.parse("http://localhost:8080/Flutter/todolist_select_all.jsp");
+    var url = Uri.parse(
+        "http://localhost:8080/Flutter/todolist_select_all.jsp?user_uId=$id");
     //http 가 위주소를 다가져옴 //await <- 빌드가 끝날때까지 일단 기다려
     var response = await http.get(url);
 
