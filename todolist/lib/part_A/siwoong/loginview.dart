@@ -161,7 +161,7 @@ class _LoginViewState extends State<LoginView> {
   Future<bool> getJSONData() async {
     // 비동기 방식 async : 동시에 실행되고
     var url = Uri.parse(
-        'http://localhost:8080/flutter/todolist_semi/todolist_user_select.jsp?uId=$userID&uPw=$userPW');
+        'http://localhost:8080/Flutter/todolist_user_select.jsp?uId=$userID&uPw=$userPW');
     var response = await http.get(url);
     // await, build가 data를 기다림
     // get 방식
@@ -211,11 +211,11 @@ class _LoginViewState extends State<LoginView> {
                 ElevatedButton(
                   
                     onPressed: () {
-                      Message.userid = 'root';
-                      Message.userpw = 'qwer1234';
-                      Message.username = 'gaseul';
-                      Message.useremail = 'julietmf@naver.com';
-                      Navigator.popAndPushNamed(context, '/drawer');
+                      Message.userid = uId.text;
+                      Message.userpw = uPw.text;
+                      // Message.username = 'gaseul';
+                      // Message.useremail = 'julietmf@naver.com';
+                      Navigator.popAndPushNamed(context, '/list');
                     },
                     child: const Text('OK'))
               ],
