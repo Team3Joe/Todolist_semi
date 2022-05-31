@@ -41,7 +41,7 @@ class _ModifyPageState extends State<ModifyPage> {
               child: TextField(
                 controller: modify,
                 keyboardType: TextInputType.text,
-                decoration: InputDecoration(labelText: "할일을 적어주세요"),
+                decoration: const InputDecoration(labelText: "할일을 적어주세요"),
               ),
             ),
             Row(
@@ -56,10 +56,9 @@ class _ModifyPageState extends State<ModifyPage> {
                         code = ListItem.code;
                       });
                       updateAction();
-                      print(content);
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Color.fromARGB(255, 142, 87, 236),
+                      primary: const Color.fromARGB(255, 142, 87, 236),
                     ),
                     child: const Text('수정', style: TextStyle(fontSize: 15)),
                   ),
@@ -72,7 +71,7 @@ class _ModifyPageState extends State<ModifyPage> {
                     deleteAction();
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 142, 87, 236),
+                    primary: const Color.fromARGB(255, 142, 87, 236),
                   ),
                   child: const Text('삭제', style: TextStyle(fontSize: 15)),
                 ),
@@ -82,7 +81,7 @@ class _ModifyPageState extends State<ModifyPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color.fromARGB(255, 164, 154, 239),
+        backgroundColor: const Color.fromARGB(255, 164, 154, 239),
         child: const Icon(Icons.arrow_back),
         onPressed: () {
           Navigator.pushNamed(context, '/list');
@@ -93,18 +92,17 @@ class _ModifyPageState extends State<ModifyPage> {
 
   updateAction() async {
     var url = Uri.parse(
-        'http://localhost:8080/Flutter/todolist_update_content.jsp?lContent=$content&lCode=$code');
+        'http://localhost:8080/flutter/todolist_update_content.jsp?lContent=$content&lCode=$code');
     var response = await http.get(url);
     var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
     setState(() {
       result = dataConvertedJSON['result'];
+      if (result == 'OK') {
+        _showDialog(context);
+      } else {
+        errorSnackBar(context);
+      }
     });
-    print(result);
-    if (result == 'OK') {
-      _showDialog(context);
-    } else {
-      errorSnackBar(context);
-    }
   }
 
   deleteAction() async {
@@ -114,13 +112,12 @@ class _ModifyPageState extends State<ModifyPage> {
     var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
     setState(() {
       result = dataConvertedJSON['result'];
+      if (result == 'OK') {
+        _showDialogDelete(context);
+      } else {
+        errorSnackBar(context);
+      }
     });
-    print(result);
-    if (result == 'OK') {
-      _showDialogDelete(context);
-    } else {
-      errorSnackBar(context);
-    }
   }
 
   _showDialog(BuildContext context) {

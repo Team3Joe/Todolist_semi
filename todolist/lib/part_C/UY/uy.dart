@@ -22,6 +22,7 @@ class _ListPageState extends State<ListPage>
   bool trueyo = true;
   bool falseyo = false;
   late String result;
+  late String email;
 
   late AnimationController _controller;
   late String id;
@@ -33,6 +34,7 @@ class _ListPageState extends State<ListPage>
     todolist = [];
     _controller = AnimationController(vsync: this);
     id = Message.userid;
+    email = Message.useremail;
     getJSONData();
   }
 
@@ -49,6 +51,13 @@ class _ListPageState extends State<ListPage>
         title: const Text("TO DO LIST"),
         toolbarHeight: 200,
         backgroundColor: const Color.fromARGB(255, 164, 154, 239),
+        actions: [
+          IconButton(
+              onPressed: () {
+                _showLogoutDialog(context);
+              },
+              icon: const Icon(Icons.logout))
+        ],
       ),
       body: Center(
         child: todolist.isEmpty
@@ -123,13 +132,13 @@ class _ListPageState extends State<ListPage>
           //패딩 없이 꽉 채우기
           padding: EdgeInsets.zero,
           children: [
-            const UserAccountsDrawerHeader(
+            UserAccountsDrawerHeader(
               //상단에 이미지 넣기
 
               //이미지 밑에 이름 & 이메일
-              accountName: Text('name'),
-              accountEmail: Text('email@naver.com'),
-              decoration: BoxDecoration(
+              accountName: Text(id),
+              accountEmail: Text(email),
+              decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 164, 154, 239),
                 //테두리, 값을 각각 줄 수 있음. all 은 한번에 다 뜸
               ),
@@ -153,6 +162,16 @@ class _ListPageState extends State<ListPage>
               ),
               title: const Text('My Page'),
             ),
+            ListTile(
+              onTap: () {
+                _showLogoutDialog(context);
+              },
+              leading: const Icon(
+                Icons.logout,
+                color: Colors.deepPurple,
+              ),
+              title: const Text('Log Out'),
+            ),
           ],
         ),
       ), //Center,
@@ -169,7 +188,7 @@ class _ListPageState extends State<ListPage>
 
   Future<bool> getJSONDataDrawer() async {
     // 비동기 방식 async : 동시에 실행되고
-    var url = Uri.parse('http://localhost:8080/Flutter/user_query.jsp');
+    var url = Uri.parse('http://localhost:8080/flutter/user_query.jsp');
     var response = await http.get(url);
     // await, build가 data를 기다림
     // get 방식
@@ -189,7 +208,7 @@ class _ListPageState extends State<ListPage>
     //이럴땐 (주소) var를 많이 씀.
     todolist.clear();
     var url = Uri.parse(
-        "http://localhost:8080/Flutter/todolist_select_all.jsp?user_uId=$id");
+        "http://localhost:8080/flutter/todolist_select_all.jsp?user_uId=$id");
     //http 가 위주소를 다가져옴 //await <- 빌드가 끝날때까지 일단 기다려
     var response = await http.get(url);
 
@@ -211,12 +230,44 @@ class _ListPageState extends State<ListPage>
     setState(() {
       var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
       result = dataConvertedJSON['result'];
+      if (result == 'OK') {
+        _showDialog(context);
+      } else {
+        errorSnackBar(context);
+      }
     });
-    if (result == 'OK') {
-      _showDialog(context);
-    } else {
-      errorSnackBar(context);
-    }
+  }
+
+  _showLogoutDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('로그아웃'),
+            content: const Text('로그아웃 하시겠습니까?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('아니오'),
+              ),
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    Message.userid = '';
+                    Message.userpw = '';
+                    Message.username = '';
+                    Message.useremail = '';
+                  });
+                  Navigator.of(context).pop();
+                  Navigator.pushNamed(context, '/login');
+                },
+                child: const Text('예'),
+              ),
+            ],
+          );
+        });
   }
 
   _showDialog(BuildContext context) {

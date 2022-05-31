@@ -209,7 +209,7 @@ class _SigninState extends State<Signin> {
           if (RegExp(
                   r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
               .hasMatch(email)) {
-                _showDialog(context);
+            _showDialog(context);
             // signinAction();
 
           } else {
@@ -228,7 +228,7 @@ class _SigninState extends State<Signin> {
 
   signinAction() async {
     var url = Uri.parse(
-        'http://localhost:8080/Flutter/user_signin_return_flutter.jsp?id=$id&pw=$pw&name=$name&email=$email');
+        'http://localhost:8080/flutter/user_signin_return_flutter.jsp?id=$id&pw=$pw&name=$name&email=$email');
     var response = await http.get(url);
     setState(() {
       var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
@@ -255,14 +255,12 @@ class _SigninState extends State<Signin> {
                   Navigator.of(ctx).pop();
                   signinAction();
                   _showFinishDialog(context);
-
                 },
                 child: const Text('예'),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(ctx).pop();
-
                 },
                 child: const Text('아니오'),
               ),
@@ -271,7 +269,7 @@ class _SigninState extends State<Signin> {
         });
   }
 
-  _showFinishDialog(BuildContext ctx){
+  _showFinishDialog(BuildContext ctx) {
     showDialog(
         context: context,
         builder: (BuildContext ctx) {
@@ -290,8 +288,6 @@ class _SigninState extends State<Signin> {
           );
         });
   }
-
-
 
   errorSnackBar(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(

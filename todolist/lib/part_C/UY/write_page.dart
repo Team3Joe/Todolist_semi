@@ -94,12 +94,12 @@ class _WritePageState extends State<WritePage> {
     setState(() {
       var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
       result = dataConvertedJSON['result'];
+      if (result == 'OK') {
+        _showDialog(context);
+      } else {
+        errorSnackBar(context);
+      }
     });
-    if (result == 'OK') {
-      _showDialog(context);
-    } else {
-      errorSnackBar(context);
-    }
   }
 
   _showDialog(BuildContext context) {
