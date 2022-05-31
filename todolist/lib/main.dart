@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         '/write': (context) => const WritePage(),
         '/modify': (context) => const ModifyPage(),
       },
-      initialRoute: '/list',
+      initialRoute: '/login',
     );
   }
 }

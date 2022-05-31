@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
+import 'package:todolist/part_B/YJ/message.dart';
 
 import 'package:todolist/part_C/UY/list_item.dart';
 
@@ -13,22 +14,33 @@ class ListPage extends StatefulWidget {
   State<ListPage> createState() => _ListPageState();
 }
 
-class _ListPageState extends State<ListPage> {
+class _ListPageState extends State<ListPage> with SingleTickerProviderStateMixin{
   late List todolist;
   bool checkValue = false;
   bool trueyo = true;
   bool falseyo = false;
   late String result;
+  late AnimationController _controller;
+  late String id;
+  late String email;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     todolist = [];
+    _controller = AnimationController(vsync: this);
+    id = Message.userid;
+    email = Message.useremail;
+    
 
     getJSONData();
   }
-
+@override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,6 +48,42 @@ class _ListPageState extends State<ListPage> {
         title: const Text("TO DO LIST"),
         toolbarHeight: 200,
         backgroundColor: const Color.fromARGB(255, 164, 154, 239),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          //패딩 없이 꽉 채우기
+          padding: EdgeInsets.zero,
+          children: [
+             UserAccountsDrawerHeader(
+              //상단에 이미지 넣기
+              
+              //이미지 밑에 이름 & 이메일
+              accountName: Text( id ),
+              accountEmail: Text( email ),
+              decoration: const BoxDecoration(
+                color:  Color.fromARGB(255, 164, 154, 239),
+                //테두리, 값을 각각 줄 수 있음. all 은 한번에 다 뜸
+                
+              ),
+            ),
+
+            // 리스트
+            ListTile(
+              onTap: () {
+                setState(() {
+                  Navigator.pushNamed(context, '/MyPage');
+              
+                });
+              },
+              leading: const Icon(
+                Icons.home,
+                color: Colors.deepPurple,
+              ),
+              title: const Text('My Page'),
+            ),
+            
+          ],
+        ),
       ),
       body: Center(
         child: todolist.isEmpty
@@ -176,6 +224,16 @@ class _ListPageState extends State<ListPage> {
             ],
           );
         });
+  }
+
+  selectAction() async {
+    var url = Uri.parse(
+        'http://localhost:8080/Flutter/user_query.jsp?id=$id');
+    var response = await http.get(url);
+    setState(() {
+      var dataCovertedJSON = json.decode(utf8.decode(response.bodyBytes));
+      result = dataCovertedJSON['result'];
+    });
   }
 
   errorSnackBar(BuildContext context) {
