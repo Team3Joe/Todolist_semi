@@ -107,6 +107,7 @@ class _SigninState extends State<Signin> {
                                   color: Color.fromARGB(255, 164, 154, 239)),
                             ),
                           ),
+                          obscureText: true,
                           keyboardType: TextInputType.text,
                           cursorColor: const Color.fromARGB(255, 164, 154, 239),
                         ),
@@ -183,7 +184,6 @@ class _SigninState extends State<Signin> {
                       email = emailController.text;
 
                       _Validation();
-                      // signinAction();
                     },
                     style: ElevatedButton.styleFrom(
                       primary: const Color.fromARGB(255, 164, 154, 239),
@@ -209,7 +209,9 @@ class _SigninState extends State<Signin> {
           if (RegExp(
                   r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
               .hasMatch(email)) {
-            signinAction();
+                _showDialog(context);
+            // signinAction();
+
           } else {
             errorSnackBar_Email(context);
           }
@@ -233,7 +235,7 @@ class _SigninState extends State<Signin> {
       result = dataConvertedJSON['result'];
 
       if (result == 'OK') {
-        _showDialog(context);
+        //_showDialog(context);
       } else {
         errorSnackBar(context);
       }
@@ -251,14 +253,45 @@ class _SigninState extends State<Signin> {
               TextButton(
                 onPressed: () {
                   Navigator.of(ctx).pop();
-                  // Navigator.of(context).pop();
+                  signinAction();
+                  _showFinishDialog(context);
+
                 },
-                child: const Text('회원가입하기'),
+                child: const Text('예'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+
+                },
+                child: const Text('아니오'),
               ),
             ],
           );
         });
   }
+
+  _showFinishDialog(BuildContext ctx){
+    showDialog(
+        context: context,
+        builder: (BuildContext ctx) {
+          return AlertDialog(
+            title: const Text('환영합니다'),
+            content: const Text('회원가입이 완료되었습니다'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                  Navigator.pushNamed(context, '/login');
+                },
+                child: const Text('로그인하러가기'),
+              ),
+            ],
+          );
+        });
+  }
+
+
 
   errorSnackBar(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -273,7 +306,7 @@ class _SigninState extends State<Signin> {
   errorSnackBar_id(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text("\t\t\t\t아이디는 4자 ~ 15자 이상으로 입력해주세요."),
+        content: Text("\t\t\t\t아이디는 5자 ~ 15자 이상으로 입력해주세요."),
         duration: Duration(seconds: 2),
         backgroundColor: Colors.red,
       ),

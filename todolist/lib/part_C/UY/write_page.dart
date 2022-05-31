@@ -1,9 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:http/http.dart' as http;
+import 'package:todolist/message.dart';
 
 class WritePage extends StatefulWidget {
   const WritePage({Key? key}) : super(key: key);
@@ -16,6 +15,7 @@ class _WritePageState extends State<WritePage> {
   late TextEditingController write;
   late String result;
   late String content;
+  String uid = Message.userid;
 
   @override
   void initState() {
@@ -53,7 +53,7 @@ class _WritePageState extends State<WritePage> {
                       insertAction();
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Color.fromARGB(255, 142, 87, 236),
+                      primary: const Color.fromARGB(255, 142, 87, 236),
                     ),
                     child: const Text('확인', style: TextStyle(fontSize: 15)),
                   ),
@@ -78,7 +78,7 @@ class _WritePageState extends State<WritePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color.fromARGB(255, 164, 154, 239),
+        backgroundColor: const Color.fromARGB(255, 164, 154, 239),
         child: const Icon(Icons.arrow_back),
         onPressed: () {
           //
@@ -89,7 +89,7 @@ class _WritePageState extends State<WritePage> {
 
   insertAction() async {
     var url = Uri.parse(
-        'http://localhost:8080/Flutter/todolist_insert.jsp?content=$content');
+        'http://localhost:8080/Flutter/todolist_insert.jsp?content=$content&user_uId=$uid');
     var response = await http.get(url);
     setState(() {
       var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
