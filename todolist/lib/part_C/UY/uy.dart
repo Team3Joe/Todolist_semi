@@ -15,9 +15,8 @@ class ListPage extends StatefulWidget {
   State<ListPage> createState() => _ListPageState();
 }
 
-class _ListPageState extends State<ListPage> 
+class _ListPageState extends State<ListPage>
     with SingleTickerProviderStateMixin {
-
   late List todolist;
   bool checkValue = false;
   bool trueyo = true;
@@ -32,12 +31,12 @@ class _ListPageState extends State<ListPage>
   void initState() {
     super.initState();
     todolist = [];
-  _controller = AnimationController(vsync: this);
+    _controller = AnimationController(vsync: this);
     id = Message.userid;
     getJSONData();
   }
 
-   @override
+  @override
   void dispose() {
     super.dispose();
     _controller.dispose();
@@ -68,6 +67,7 @@ class _ListPageState extends State<ListPage>
                             .then((value) => getJSONData());
                         ListItem.code = todolist[index]['code'];
                         ListItem.content = todolist[index]['content'];
+                        Message.userid = todolist[index]['uid'];
                       });
                     },
                     child: Card(
@@ -145,7 +145,7 @@ class _ListPageState extends State<ListPage>
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: ((BuildContext context) => MyPage())));
+                        builder: ((BuildContext context) => const MyPage())));
               },
               leading: const Icon(
                 Icons.home,
@@ -181,38 +181,26 @@ class _ListPageState extends State<ListPage>
     setState(() {
       data.addAll(result);
     });
-    print(data);
-    print(data[0]['pw']);
     return true;
   }
 
-
   Future<bool> getJSONData() async {
-    // //비동기 함수 == 작업하면서 화면구성도 같이하겠다!
-    // //이럴땐 (주소) var를 많이 씀.
-    // todolist.clear();
-    // var url =
-    //     Uri.parse("http://localhost:8080/Flutter/todolist_select_all.jsp");
-    // //http 가 위주소를 다가져옴 //await <- 빌드가 끝날때까지 일단 기다려
-    // var response = await http.get(url);
+    //비동기 함수 == 작업하면서 화면구성도 같이하겠다!
+    //이럴땐 (주소) var를 많이 씀.
+    todolist.clear();
+    var url = Uri.parse(
+        "http://localhost:8080/Flutter/todolist_select_all.jsp?user_uId=$id");
+    //http 가 위주소를 다가져옴 //await <- 빌드가 끝날때까지 일단 기다려
+    var response = await http.get(url);
 
-    // /* 내가 알아보기 쉽게 변형해주기! */
-    // setState(() {
-    //   //화면 구성이 바뀌니까 setState 사용!
-    //   //body는 통째로 보여줘
-    //   //한글해주는건 utf8.decode(response.bodyBytes)로 해야함!
-    //   var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
-    //   List result = dataConvertedJSON['results']; //results 키값!
+    setState(() {
+      var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+      List result = dataConvertedJSON['results']; //results 키값!
 
-    //   //print(result);
-    //   //result[0]['code'] = S001 <- 리스트에 넣어준거 불러오는법
+      //   //result[0]['code'] = S001 <- 리스트에 넣어준거 불러오는법
+      todolist.addAll(result);
+    });
 
-    //   //불러오고 수정한값을 이제 넣어주자!
-    //   todolist.addAll(result);
-    //   //print(data[0]['code']); //flutter: S001
-    // });
-
-    //print(response.body);
     return true;
   }
 

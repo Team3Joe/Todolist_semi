@@ -159,7 +159,7 @@ class _LoginViewState extends State<LoginView> {
   Future<bool> _getJSONData() async {
     // 비동기 방식 async : 동시에 실행되고
     var url = Uri.parse(
-        'http://localhost:8080/flutter/todolist_semi/todolist_user_select.jsp?uId=$userID&uPw=$userPW');
+        'http://localhost:8080/Flutter/todolist_user_select.jsp?uId=$userID&uPw=$userPW');
     var response = await http.get(url);
     // await, build가 data를 기다림
     // get 방식
