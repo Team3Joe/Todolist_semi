@@ -22,6 +22,7 @@ class _ListPageState extends State<ListPage>
   bool trueyo = true;
   bool falseyo = false;
   late String result;
+  late String email;
 
   late AnimationController _controller;
   late String id;
@@ -33,6 +34,8 @@ class _ListPageState extends State<ListPage>
     todolist = [];
     _controller = AnimationController(vsync: this);
     id = Message.userid;
+    email = Message.useremail;
+
     getJSONData();
   }
 
@@ -46,76 +49,99 @@ class _ListPageState extends State<ListPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("TO DO LIST"),
+        title: const Text(
+          "TO DO LIST",
+          style: TextStyle(
+            fontSize: 25,
+          ),
+        ),
         toolbarHeight: 200,
         backgroundColor: const Color.fromARGB(255, 164, 154, 239),
+        actions: [
+          IconButton(
+              onPressed: () {
+                _showLogoutDialog(context);
+              },
+              icon: const Icon(Icons.logout))
+        ],
       ),
       body: Center(
         child: todolist.isEmpty
             ? const Text(
-                "데이터가 없습니다. \n 화면 우측하단의 + 버튼을 눌러 \n 당신의 ToDoList를 추가하세요.")
-            : ListView.builder(
-                itemCount: todolist.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      // Massage.code = data[index]['code'];
-                      // Navigator.pushNamed(context, '/1st');
+                "ToDoList가 비어있습니다. \n\n화면 우측하단의 + 버튼을 눌러 \n\n당신의 ToDoList를 추가하세요.",
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Color.fromARGB(255, 164, 154, 239),
+                    fontWeight: FontWeight.bold),
+              )
+            : Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListView.builder(
+                  itemCount: todolist.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        // Massage.code = data[index]['code'];
+                        // Navigator.pushNamed(context, '/1st');
 
-                      setState(() {
-                        Navigator.pushNamed(context, '/modify')
-                            .then((value) => getJSONData());
-                        ListItem.code = todolist[index]['code'];
-                        ListItem.content = todolist[index]['content'];
-                        Message.userid = todolist[index]['uid'];
-                      });
-                    },
-                    child: Card(
-                      color: Colors.deepPurple[50],
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Row(
-                                  children: [
-                                    Checkbox(
-                                      value: todolist[index]['check'] == '1'
-                                          ? false
-                                          : true,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          if (value == true) {
-                                            todolist[index]['check'] = '0';
+                        setState(() {
+                          Navigator.pushNamed(context, '/modify')
+                              .then((value) => getJSONData());
+                          ListItem.code = todolist[index]['code'];
+                          ListItem.content = todolist[index]['content'];
+                          Message.userid = todolist[index]['uid'];
+                        });
+                      },
+                      child: Card(
+                        color: Colors.deepPurple[50],
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Checkbox(
+                                        value: todolist[index]['check'] == '1'
+                                            ? false
+                                            : true,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            if (value == true) {
+                                              todolist[index]['check'] = '0';
 
-                                            updateCheckboxAction(index);
-                                          } else {
-                                            todolist[index]['check'] = '1';
-                                            updateCheckboxAction(index);
-                                          }
-                                        });
-                                      },
-                                    ),
-                                    todolist[index]['check'] == '0'
-                                        ? Text(
-                                            todolist[index]['content'],
-                                            style: const TextStyle(
-                                                color: Colors.grey),
-                                          )
-                                        : Text(
-                                            todolist[index]['content'],
-                                          )
-                                  ],
-                                ),
-                              ],
+                                              updateCheckboxAction(index);
+                                            } else {
+                                              todolist[index]['check'] = '1';
+                                              updateCheckboxAction(index);
+                                            }
+                                          });
+                                        },
+                                      ),
+                                      todolist[index]['check'] == '0'
+                                          ? Text(
+                                              todolist[index]['content'],
+                                              style: const TextStyle(
+                                                  color: Colors.grey,
+                                                  fontSize: 15),
+                                            )
+                                          : Text(
+                                              todolist[index]['content'],
+                                              style:
+                                                  const TextStyle(fontSize: 15),
+                                            )
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ), //Lb
       ),
       drawer: Drawer(
@@ -123,13 +149,18 @@ class _ListPageState extends State<ListPage>
           //패딩 없이 꽉 채우기
           padding: EdgeInsets.zero,
           children: [
-            const UserAccountsDrawerHeader(
+            UserAccountsDrawerHeader(
               //상단에 이미지 넣기
 
               //이미지 밑에 이름 & 이메일
-              accountName: Text('name'),
-              accountEmail: Text('email@naver.com'),
-              decoration: BoxDecoration(
+              accountName: Text(
+                id,
+                style: const TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+              accountEmail: Text(email, style: TextStyle(fontSize: 15)),
+              decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 164, 154, 239),
                 //테두리, 값을 각각 줄 수 있음. all 은 한번에 다 뜸
               ),
@@ -152,6 +183,16 @@ class _ListPageState extends State<ListPage>
                 color: Colors.deepPurple,
               ),
               title: const Text('My Page'),
+            ),
+            ListTile(
+              onTap: () {
+                _showLogoutDialog(context);
+              },
+              leading: const Icon(
+                Icons.logout,
+                color: Colors.deepPurple,
+              ),
+              title: const Text('Log Out'),
             ),
           ],
         ),
@@ -215,6 +256,38 @@ class _ListPageState extends State<ListPage>
     } else {
       errorSnackBar(context);
     }
+  }
+
+  _showLogoutDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('로그아웃'),
+            content: const Text('로그아웃 하시겠습니까?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('아니오'),
+              ),
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    Message.userid = '';
+                    Message.userpw = '';
+                    Message.username = '';
+                    Message.useremail = '';
+                  });
+                  Navigator.of(context).pop();
+                  Navigator.pushNamed(context, '/login');
+                },
+                child: const Text('예'),
+              ),
+            ],
+          );
+        });
   }
 
   _showDialog(BuildContext context) {

@@ -29,7 +29,12 @@ class _ModifyPageState extends State<ModifyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Modify To Do List"),
+        title: const Text(
+          "Modify To Do List",
+          style: TextStyle(
+            fontSize: 25,
+          ),
+        ),
         toolbarHeight: 230,
         backgroundColor: const Color.fromARGB(255, 164, 154, 239),
       ),
@@ -44,39 +49,45 @@ class _ModifyPageState extends State<ModifyPage> {
                 decoration: InputDecoration(labelText: "할일을 적어주세요"),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          content = modify.text;
+                          code = ListItem.code;
+                        });
+                        updateAction();
+                        print(content);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Color.fromARGB(255, 142, 87, 236),
+                      ),
+                      child: const Text('수정', style: TextStyle(fontSize: 15)),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 60,
+                  ),
+                  ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        content = modify.text;
                         code = ListItem.code;
                       });
-                      updateAction();
-                      print(content);
+                      deleteAction();
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Color.fromARGB(255, 142, 87, 236),
+                      primary: Color.fromARGB(255, 231, 94, 246),
                     ),
-                    child: const Text('수정', style: TextStyle(fontSize: 15)),
+                    child: const Text('삭제', style: TextStyle(fontSize: 15)),
                   ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      code = ListItem.code;
-                    });
-                    deleteAction();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 142, 87, 236),
-                  ),
-                  child: const Text('삭제', style: TextStyle(fontSize: 15)),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),

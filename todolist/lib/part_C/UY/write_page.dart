@@ -27,7 +27,12 @@ class _WritePageState extends State<WritePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Write To Do List"),
+        title: const Text(
+          "Write To Do List",
+          style: TextStyle(
+            fontSize: 25,
+          ),
+        ),
         toolbarHeight: 230,
         backgroundColor: const Color.fromARGB(255, 164, 154, 239),
       ),
@@ -49,8 +54,12 @@ class _WritePageState extends State<WritePage> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     onPressed: () {
-                      content = write.text;
-                      insertAction();
+                      if (write.text == "") {
+                        emptyalert(context);
+                      } else {
+                        content = write.text;
+                        insertAction();
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       primary: const Color.fromARGB(255, 142, 87, 236),
@@ -130,5 +139,13 @@ class _WritePageState extends State<WritePage> {
         backgroundColor: Colors.red,
       ),
     );
+  }
+
+  emptyalert(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('할일을 적어주세요 :) '),
+      duration: Duration(seconds: 2),
+      backgroundColor: Colors.red,
+    ));
   }
 }
