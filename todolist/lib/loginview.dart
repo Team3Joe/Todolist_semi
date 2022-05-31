@@ -91,11 +91,9 @@ class _LoginViewState extends State<LoginView> {
                         setState(() {
                           userID = uId.text.trim();
                           userPW = uPw.text.trim();
-                          print(userID);
                         });
                         getJSONData();
                         // data 오류
-                        print(data);
                         logInCheck(context);
                       }
                     },
