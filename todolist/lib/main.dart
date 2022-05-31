@@ -5,6 +5,7 @@ import 'package:todolist/part_A/siwoong/loginview.dart';
 import 'package:todolist/part_C/UY/modify_page.dart';
 import 'package:todolist/part_C/UY/uy.dart';
 import 'package:todolist/part_C/UY/write_page.dart';
+import 'package:todolist/pwFind.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         // part_B
 
         // part_C
-        '/list': (context) => const ListPage(),
+        '/list': (context) => const FindPw(),
         '/write': (context) => const WritePage(),
         '/modify': (context) => const ModifyPage(),
       },

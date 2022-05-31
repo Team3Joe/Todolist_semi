@@ -122,7 +122,19 @@ class _WritePageState extends State<WritePage> {
         });
   }
 
-  errorSnackBar(BuildContext context) {
+
+
+
+
+
+
+
+
+
+
+  
+
+  errorSnackBar(BuildContext context){
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('사용자 정보 입력에 문제가 발생 하였습니다.'),
