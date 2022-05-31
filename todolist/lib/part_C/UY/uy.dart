@@ -16,9 +16,8 @@ class ListPage extends StatefulWidget {
   State<ListPage> createState() => _ListPageState();
 }
 
-class _ListPageState extends State<ListPage> 
+class _ListPageState extends State<ListPage>
     with SingleTickerProviderStateMixin {
-
   late List todolist;
   bool checkValue = false;
   bool trueyo = true;
@@ -34,12 +33,12 @@ class _ListPageState extends State<ListPage>
     // TODO: implement initState
     super.initState();
     todolist = [];
-  _controller = AnimationController(vsync: this);
+    _controller = AnimationController(vsync: this);
     id = Message.userid;
     getJSONData();
   }
 
-   @override
+  @override
   void dispose() {
     super.dispose();
     _controller.dispose();
@@ -70,6 +69,7 @@ class _ListPageState extends State<ListPage>
                             .then((value) => getJSONData());
                         ListItem.code = todolist[index]['code'];
                         ListItem.content = todolist[index]['content'];
+                        Message.userid = todolist[index]['uid'];
                       });
                     },
                     child: Card(
@@ -188,13 +188,12 @@ class _ListPageState extends State<ListPage>
     return true;
   }
 
-
   Future<bool> getJSONData() async {
     //비동기 함수 == 작업하면서 화면구성도 같이하겠다!
     //이럴땐 (주소) var를 많이 씀.
     todolist.clear();
-    var url =
-        Uri.parse("http://localhost:8080/Flutter/todolist_select_all.jsp");
+    var url = Uri.parse(
+        "http://localhost:8080/Flutter/todolist_select_all.jsp?user_uId=$id");
     //http 가 위주소를 다가져옴 //await <- 빌드가 끝날때까지 일단 기다려
     var response = await http.get(url);
 

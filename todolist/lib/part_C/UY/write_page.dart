@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:http/http.dart' as http;
+import 'package:todolist/message.dart';
+import 'package:todolist/part_C/UY/list_item.dart';
 
 class WritePage extends StatefulWidget {
   const WritePage({Key? key}) : super(key: key);
@@ -16,6 +18,7 @@ class _WritePageState extends State<WritePage> {
   late TextEditingController write;
   late String result;
   late String content;
+  String uid = Message.userid;
 
   @override
   void initState() {
@@ -89,7 +92,7 @@ class _WritePageState extends State<WritePage> {
 
   insertAction() async {
     var url = Uri.parse(
-        'http://localhost:8080/Flutter/todolist_insert.jsp?content=$content');
+        'http://localhost:8080/Flutter/todolist_insert.jsp?content=$content&user_uId=$uid');
     var response = await http.get(url);
     setState(() {
       var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
