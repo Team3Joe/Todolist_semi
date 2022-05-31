@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
         '/find': (context) => const FindMain(),
 
         // part_B
-        // 가슬님것 시작부분 까지만 제가(시웅) 해놓고 나머지는 채워주세요
         '/drawer': (context) => const Drawer(),
 
         // part_C
