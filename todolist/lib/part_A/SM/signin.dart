@@ -209,7 +209,9 @@ class _SigninState extends State<Signin> {
           if (RegExp(
                   r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
               .hasMatch(email)) {
-            signinAction();
+                _showDialog(context);
+            // signinAction();
+
           } else {
             errorSnackBar_Email(context);
           }
@@ -233,7 +235,7 @@ class _SigninState extends State<Signin> {
       result = dataConvertedJSON['result'];
 
       if (result == 'OK') {
-        _showDialog(context);
+        //_showDialog(context);
       } else {
         errorSnackBar(context);
       }
@@ -251,14 +253,45 @@ class _SigninState extends State<Signin> {
               TextButton(
                 onPressed: () {
                   Navigator.of(ctx).pop();
-                  // Navigator.of(context).pop();
+                  signinAction();
+                  _showFinishDialog(context);
+
                 },
-                child: const Text('회원가입하기'),
+                child: const Text('예'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+
+                },
+                child: const Text('아니오'),
               ),
             ],
           );
         });
   }
+
+  _showFinishDialog(BuildContext ctx){
+    showDialog(
+        context: context,
+        builder: (BuildContext ctx) {
+          return AlertDialog(
+            title: const Text('환영합니다'),
+            content: const Text('회원가입이 완료되었습니다'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                  Navigator.pushNamed(context, '/login');
+                },
+                child: const Text('로그인하러가기'),
+              ),
+            ],
+          );
+        });
+  }
+
+
 
   errorSnackBar(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
