@@ -107,6 +107,7 @@ class _SigninState extends State<Signin> {
                                   color: Color.fromARGB(255, 164, 154, 239)),
                             ),
                           ),
+                          obscureText: true,
                           keyboardType: TextInputType.text,
                           cursorColor: const Color.fromARGB(255, 164, 154, 239),
                         ),
@@ -183,7 +184,6 @@ class _SigninState extends State<Signin> {
                       email = emailController.text;
 
                       _Validation();
-                      // signinAction();
                     },
                     style: ElevatedButton.styleFrom(
                       primary: const Color.fromARGB(255, 164, 154, 239),
@@ -273,7 +273,7 @@ class _SigninState extends State<Signin> {
   errorSnackBar_id(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text("\t\t\t\t아이디는 4자 ~ 15자 이상으로 입력해주세요."),
+        content: Text("\t\t\t\t아이디는 5자 ~ 15자 이상으로 입력해주세요."),
         duration: Duration(seconds: 2),
         backgroundColor: Colors.red,
       ),

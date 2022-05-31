@@ -105,7 +105,7 @@ class _FindIDState extends State<FindID> {
                       const Text('아직 회원이 아니신가요?'),
                       TextButton(
                         onPressed: () {
-                          // Navigator.pushNamed(context, '/signin');
+                          Navigator.pushNamed(context, '/signin');
                         },
                         child: const Text('회원가입 하기'),
                       ),
