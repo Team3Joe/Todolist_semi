@@ -29,7 +29,6 @@ class _LoginViewState extends State<LoginView> {
     userPW = '';
 
     data = [];
-    getJSONData();
   }
 
   @override
@@ -94,7 +93,7 @@ class _LoginViewState extends State<LoginView> {
                           userID = uId.text.trim();
                           userPW = uPw.text.trim();
                         });
-                        getJSONData().then((value) => logInCheck(context));
+                        _getJSONData().then((value) => logInCheck(context));
                         // data 오류
                       }
                     },
@@ -157,22 +156,22 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  Future<bool> getJSONData() async {
+  Future<bool> _getJSONData() async {
     // 비동기 방식 async : 동시에 실행되고
     var url = Uri.parse(
-        'http://localhost:8080/Flutter/todolist_user_select.jsp?uId=$userID&uPw=$userPW');
+        'http://localhost:8080/Flutter/todolist_semi/todolist_user_select.jsp?uId=$userID&uPw=$userPW');
     var response = await http.get(url);
     // await, build가 data를 기다림
     // get 방식
     var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
-    // body 자체로는 decode하지 못한다 : bodyBytes
     List result = dataConvertedJSON['results'];
-    // 행렬의 형태로 result에 저장한다. [2,4]
-
     setState(() {
       data = []; // 초기화 안하면 계속 누적되어서 출력된다.
       data.addAll(result);
     });
+    // body 자체로는 decode하지 못한다 : bodyBytes
+    // 행렬의 형태로 result에 저장한다.
+
     return true;
   }
 
@@ -209,10 +208,10 @@ class _LoginViewState extends State<LoginView> {
               actions: [
                 ElevatedButton(
                     onPressed: () {
-                      Message.userid = uId.text;
-                      Message.userpw = uPw.text;
-                      // Message.username = 'gaseul';
-                      // Message.useremail = 'julietmf@naver.com';
+                      Message.userid = data[0]['uId'];
+                      Message.userpw = data[0]['uPw'];
+                      Message.username = data[0]['uName'];
+                      Message.useremail = data[0]['uEmail'];
                       Navigator.popAndPushNamed(context, '/list');
                     },
                     child: const Text('OK'))

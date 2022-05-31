@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ui';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -30,7 +29,6 @@ class _ListPageState extends State<ListPage>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     todolist = [];
     _controller = AnimationController(vsync: this);
@@ -147,7 +145,7 @@ class _ListPageState extends State<ListPage>
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: ((BuildContext context) => MyPage())));
+                        builder: ((BuildContext context) => const MyPage())));
               },
               leading: const Icon(
                 Icons.home,
@@ -159,7 +157,7 @@ class _ListPageState extends State<ListPage>
         ),
       ), //Center,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color.fromARGB(255, 164, 154, 239),
+        backgroundColor: const Color.fromARGB(255, 164, 154, 239),
         child: const Icon(Icons.add),
         onPressed: () {
           //WritePage로 이동
@@ -183,8 +181,6 @@ class _ListPageState extends State<ListPage>
     setState(() {
       data.addAll(result);
     });
-    print(data);
-    print(data[0]['pw']);
     return true;
   }
 
@@ -199,6 +195,7 @@ class _ListPageState extends State<ListPage>
       var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
       List result = dataConvertedJSON['results']; //results 키값!
 
+      //   //result[0]['code'] = S001 <- 리스트에 넣어준거 불러오는법
       todolist.addAll(result);
     });
 

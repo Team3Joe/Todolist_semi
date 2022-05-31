@@ -21,9 +21,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginView(),
         '/signin': (context) => const Signin(),
         '/find': (context) => const FindMain(),
-
         // part_B
-        '/drawer': (context) => const Drawer(),
 
         // part_C
         '/list': (context) => const ListPage(),
