@@ -5,10 +5,7 @@ import 'package:http/http.dart' as http;
 
 import '../../message.dart';
 
-
 class MyPage extends StatefulWidget {
-  
-
   const MyPage({Key? key}) : super(key: key);
 
   @override
@@ -34,20 +31,17 @@ class _MyPageState extends State<MyPage> {
   void initState() {
     super.initState();
 
-  
     idController = TextEditingController();
     pwController = TextEditingController();
     nameController = TextEditingController();
     emailController = TextEditingController();
-  
-    
+
     idController.text = Message.userid;
     pwController.text = Message.userpw;
     nameController.text = Message.username;
     emailController.text = Message.useremail;
 
     // result = '';
-
   }
 
   @override
@@ -62,21 +56,22 @@ class _MyPageState extends State<MyPage> {
         child: Column(
           children: [
             const SizedBox(
-              height: 40,
+              height: 75,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 35, 0, 0),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: const [
                       Padding(
                         padding: EdgeInsets.fromLTRB(0, 0, 0, 43),
                         child: Text('아이디 :'),
                       ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, 10, 40),
+                        padding: EdgeInsets.fromLTRB(0, 0, 0, 40),
                         child: Text('비밀번호 :'),
                       ),
                       Padding(
@@ -90,7 +85,9 @@ class _MyPageState extends State<MyPage> {
                     ],
                   ),
                 ),
+                const SizedBox(width: 10,),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
                       width: 180,
@@ -190,7 +187,7 @@ class _MyPageState extends State<MyPage> {
                           )),
                     ),
                     SizedBox(
-                      width: 180,
+                      width: 200,
                       height: 60,
                       child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -280,6 +277,14 @@ class _MyPageState extends State<MyPage> {
       var dataCovertedJSON = json.decode(utf8.decode(response.bodyBytes));
       result = dataCovertedJSON['result'];
       if (result == 'OK') {
+        Message.userpw = pwController.text.trim();
+        Message.username = nameController.text.trim();
+        Message.useremail = emailController.text.trim();
+
+        pwController.text = Message.userpw;
+        nameController.text = Message.username;
+        emailController.text = Message.useremail;
+
         _showDialog(context);
       } else {
         errorSnackBar(context);
@@ -287,10 +292,8 @@ class _MyPageState extends State<MyPage> {
     });
   }
 
-
   deleteAction() async {
-    var url = Uri.parse(
-        'http://localhost:8080/Flutter/user_delete.jsp?id=$id');
+    var url = Uri.parse('http://localhost:8080/Flutter/user_delete.jsp?id=$id');
     var response = await http.get(url);
     setState(() {
       var dataCovertedJSON = json.decode(utf8.decode(response.bodyBytes));
@@ -313,8 +316,13 @@ class _MyPageState extends State<MyPage> {
             actions: [
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  FocusScope.of(context).unfocus();
                   Navigator.pop(context);
+                  //  Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //       builder: (context) => const MyPage(),
+                  //     )).then((value) => Modify());
                 },
                 child: const Text("OK"),
               ),
@@ -322,6 +330,7 @@ class _MyPageState extends State<MyPage> {
           );
         });
   }
+
   _DeleteShowDialog(BuildContext context) {
     showDialog(
         context: context,
@@ -351,5 +360,14 @@ class _MyPageState extends State<MyPage> {
         backgroundColor: Colors.red,
       ),
     );
+  }
+
+  Modify() {
+    setState(() {
+      Message.userid = idController.text;
+      Message.userpw = pwController.text;
+      Message.username = nameController.text;
+      Message.useremail = emailController.text;
+    });
   }
 }
