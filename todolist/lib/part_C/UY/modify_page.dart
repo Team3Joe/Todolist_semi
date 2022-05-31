@@ -35,7 +35,7 @@ class _ModifyPageState extends State<ModifyPage> {
             fontSize: 25,
           ),
         ),
-        toolbarHeight: 230,
+        toolbarHeight: 120,
         backgroundColor: const Color.fromARGB(255, 164, 154, 239),
       ),
       body: Center(
@@ -139,8 +139,8 @@ class _ModifyPageState extends State<ModifyPage> {
         context: context,
         builder: (BuildContext ctx) {
           return AlertDialog(
-            title: const Text('입력 결과'),
-            content: const Text('입력이 완료 되었습니다.'),
+            title: const Text('수정 결과'),
+            content: const Text('수정이 완료 되었습니다.'),
             actions: [
               TextButton(
                 onPressed: () {

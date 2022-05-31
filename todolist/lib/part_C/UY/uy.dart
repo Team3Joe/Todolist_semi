@@ -23,6 +23,7 @@ class _ListPageState extends State<ListPage>
   bool falseyo = false;
   late String result;
   late String email;
+  late String comment;
 
   late AnimationController _controller;
   late String id;
@@ -35,6 +36,7 @@ class _ListPageState extends State<ListPage>
     _controller = AnimationController(vsync: this);
     id = Message.userid;
     email = Message.useremail;
+    comment = '';
 
     getJSONData();
   }
@@ -55,7 +57,7 @@ class _ListPageState extends State<ListPage>
             fontSize: 25,
           ),
         ),
-        toolbarHeight: 200,
+        toolbarHeight: 120,
         backgroundColor: const Color.fromARGB(255, 164, 154, 239),
         actions: [
           IconButton(
@@ -69,10 +71,7 @@ class _ListPageState extends State<ListPage>
         child: todolist.isEmpty
             ? const Text(
                 "ToDoList가 비어있습니다. \n\n화면 우측하단의 + 버튼을 눌러 \n\n당신의 ToDoList를 추가하세요.",
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Color.fromARGB(255, 164, 154, 239),
-                    fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20),
               )
             : Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -110,11 +109,12 @@ class _ListPageState extends State<ListPage>
                                           setState(() {
                                             if (value == true) {
                                               todolist[index]['check'] = '0';
-
                                               updateCheckboxAction(index);
+                                              comment = "Mission Clear ;)";
                                             } else {
                                               todolist[index]['check'] = '1';
                                               updateCheckboxAction(index);
+                                              comment = "You Can Do It !";
                                             }
                                           });
                                         },
@@ -159,7 +159,7 @@ class _ListPageState extends State<ListPage>
                   fontSize: 20,
                 ),
               ),
-              accountEmail: Text(email, style: TextStyle(fontSize: 15)),
+              accountEmail: Text(email, style: const TextStyle(fontSize: 15)),
               decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 164, 154, 239),
                 //테두리, 값을 각각 줄 수 있음. all 은 한번에 다 뜸
@@ -184,6 +184,7 @@ class _ListPageState extends State<ListPage>
               ),
               title: const Text('My Page'),
             ),
+
             ListTile(
               onTap: () {
                 _showLogoutDialog(context);
@@ -295,14 +296,14 @@ class _ListPageState extends State<ListPage>
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('수정 결과'),
-            content: const Text('수정이 완료 되었습니다.'),
+            title: const Text('Check Box'),
+            content: Text(comment),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text('OK'),
+                child: Text('OK'),
               ),
             ],
           );

@@ -70,7 +70,6 @@ class _FindIDState extends State<FindID> {
                     decoration:
                         const InputDecoration(labelText: 'email을 입력하세요.'),
                     keyboardType: TextInputType.text,
-                    obscureText: true,
                     onChanged: (value) {},
                   ),
                   const SizedBox(

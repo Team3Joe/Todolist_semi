@@ -49,220 +49,225 @@ class _MyPageState extends State<MyPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("My Page"),
-        toolbarHeight: 230,
+        toolbarHeight: 120,
         backgroundColor: const Color.fromARGB(255, 164, 154, 239),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 75,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 35, 0, 0),
-                  child: Column(
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Center(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 75,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 35, 0, 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: const [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 43),
+                          child: Text('아이디 :'),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 40),
+                          child: Text('비밀번호 :'),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 40),
+                          child: Text('이름 :'),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 40),
+                          child: Text('이메일 :'),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 43),
-                        child: Text('아이디 :'),
+                    children: [
+                      SizedBox(
+                        width: 180,
+                        height: 60,
+                        child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              readOnly: true,
+                              decoration: const InputDecoration(
+                                labelText: 'ID',
+                                hintText: 'id를 입력해주세요!',
+                                labelStyle:
+                                    TextStyle(color: Colors.deepPurpleAccent),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                  borderSide: BorderSide(
+                                      width: 1, color: Colors.deepPurpleAccent),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                  borderSide: BorderSide(
+                                      width: 1, color: Colors.deepPurpleAccent),
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                ),
+                              ),
+                              controller: idController,
+                              keyboardType: TextInputType.text,
+                            )),
                       ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 40),
-                        child: Text('비밀번호 :'),
+                      SizedBox(
+                        width: 180,
+                        height: 60,
+                        child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              decoration: const InputDecoration(
+                                labelText: 'PW',
+                                hintText: '비밀번호를 입력해주세요!',
+                                labelStyle:
+                                    TextStyle(color: Colors.deepPurpleAccent),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                  borderSide: BorderSide(
+                                      width: 1, color: Colors.deepPurpleAccent),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                  borderSide: BorderSide(
+                                      width: 1, color: Colors.deepPurpleAccent),
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                ),
+                              ),
+                              controller: pwController,
+                              keyboardType: TextInputType.text,
+                            )),
                       ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 40),
-                        child: Text('이름 :'),
+                      SizedBox(
+                        width: 180,
+                        height: 60,
+                        child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              decoration: const InputDecoration(
+                                labelText: 'Name',
+                                hintText: '이름을 입력해주세요!',
+                                labelStyle:
+                                    TextStyle(color: Colors.deepPurpleAccent),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                  borderSide: BorderSide(
+                                      width: 1, color: Colors.deepPurpleAccent),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                  borderSide: BorderSide(
+                                      width: 1, color: Colors.deepPurpleAccent),
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                ),
+                              ),
+                              controller: nameController,
+                              keyboardType: TextInputType.text,
+                            )),
                       ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 40),
-                        child: Text('이메일 :'),
+                      SizedBox(
+                        width: 200,
+                        height: 60,
+                        child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              decoration: const InputDecoration(
+                                labelText: 'Email',
+                                hintText: '이메일을 입력해주세요!',
+                                labelStyle:
+                                    TextStyle(color: Colors.deepPurpleAccent),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                  borderSide: BorderSide(
+                                      width: 1, color: Colors.deepPurpleAccent),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                  borderSide: BorderSide(
+                                      width: 1, color: Colors.deepPurpleAccent),
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                ),
+                              ),
+                              controller: emailController,
+                              keyboardType: TextInputType.emailAddress,
+                            )),
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(width: 10,),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 180,
-                      height: 60,
-                      child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextField(
-                            readOnly: true,
-                            decoration: const InputDecoration(
-                              labelText: 'ID',
-                              hintText: 'id를 입력해주세요!',
-                              labelStyle:
-                                  TextStyle(color: Colors.deepPurpleAccent),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
-                                borderSide: BorderSide(
-                                    width: 1, color: Colors.deepPurpleAccent),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
-                                borderSide: BorderSide(
-                                    width: 1, color: Colors.deepPurpleAccent),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
-                              ),
-                            ),
-                            controller: idController,
-                            keyboardType: TextInputType.text,
-                          )),
+                ],
+              ),
+              const SizedBox(
+                height: 70,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      id = idController.text;
+                      pw = pwController.text;
+                      name = nameController.text;
+                      email = emailController.text;
+                      updateAction();
+                    },
+                    style: ElevatedButton.styleFrom(
+                        primary: const Color.fromARGB(255, 164, 154, 239),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                    child: const Text(
+                      '수정',
                     ),
-                    SizedBox(
-                      width: 180,
-                      height: 60,
-                      child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextField(
-                            decoration: const InputDecoration(
-                              labelText: 'PW',
-                              hintText: '비밀번호를 입력해주세요!',
-                              labelStyle:
-                                  TextStyle(color: Colors.deepPurpleAccent),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
-                                borderSide: BorderSide(
-                                    width: 1, color: Colors.deepPurpleAccent),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
-                                borderSide: BorderSide(
-                                    width: 1, color: Colors.deepPurpleAccent),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
-                              ),
-                            ),
-                            controller: pwController,
-                            keyboardType: TextInputType.text,
-                          )),
-                    ),
-                    SizedBox(
-                      width: 180,
-                      height: 60,
-                      child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextField(
-                            decoration: const InputDecoration(
-                              labelText: 'Name',
-                              hintText: '이름을 입력해주세요!',
-                              labelStyle:
-                                  TextStyle(color: Colors.deepPurpleAccent),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
-                                borderSide: BorderSide(
-                                    width: 1, color: Colors.deepPurpleAccent),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
-                                borderSide: BorderSide(
-                                    width: 1, color: Colors.deepPurpleAccent),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
-                              ),
-                            ),
-                            controller: nameController,
-                            keyboardType: TextInputType.text,
-                          )),
-                    ),
-                    SizedBox(
-                      width: 200,
-                      height: 60,
-                      child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextField(
-                            decoration: const InputDecoration(
-                              labelText: 'Email',
-                              hintText: '이메일을 입력해주세요!',
-                              labelStyle:
-                                  TextStyle(color: Colors.deepPurpleAccent),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
-                                borderSide: BorderSide(
-                                    width: 1, color: Colors.deepPurpleAccent),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
-                                borderSide: BorderSide(
-                                    width: 1, color: Colors.deepPurpleAccent),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
-                              ),
-                            ),
-                            controller: emailController,
-                            keyboardType: TextInputType.emailAddress,
-                          )),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 70,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    id = idController.text;
-                    pw = pwController.text;
-                    name = nameController.text;
-                    email = emailController.text;
-                    updateAction();
-                  },
-                  style: ElevatedButton.styleFrom(
-                      primary: const Color.fromARGB(255, 164, 154, 239),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10))),
-                  child: const Text(
-                    '수정',
                   ),
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    id = idController.text;
-                    deleteAction();
-                  },
-                  style: ElevatedButton.styleFrom(
-                      primary: const Color.fromARGB(255, 164, 154, 239),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10))),
-                  child: const Text(
-                    '삭제',
+                  const SizedBox(
+                    width: 20,
                   ),
-                ),
-              ],
-            ),
-          ],
+                  ElevatedButton(
+                    onPressed: () {
+                      id = idController.text;
+                      deleteAction();
+                    },
+                    style: ElevatedButton.styleFrom(
+                        primary: const Color.fromARGB(255, 164, 154, 239),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                    child: const Text(
+                      '회원탈퇴',
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -336,8 +341,8 @@ class _MyPageState extends State<MyPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('삭제하기'),
-            content: const Text('정말로 삭제하시겠습니까?'),
+            title: const Text('회원 탈퇴'),
+            content: const Text('정말로 탈퇴하시겠습니까?'),
             actions: [
               TextButton(
                 onPressed: () {
@@ -345,7 +350,14 @@ class _MyPageState extends State<MyPage> {
                   Navigator.pop(context);
                   Navigator.pushNamed(context, '/login');
                 },
-                child: const Text("삭제할거임"),
+                child: const Text('예'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.pop(context);
+                },
+                child: const Text('아니오'),
               ),
             ],
           );

@@ -33,7 +33,7 @@ class _WritePageState extends State<WritePage> {
             fontSize: 25,
           ),
         ),
-        toolbarHeight: 230,
+        toolbarHeight: 120,
         backgroundColor: const Color.fromARGB(255, 164, 154, 239),
       ),
       body: Center(
@@ -90,7 +90,7 @@ class _WritePageState extends State<WritePage> {
         backgroundColor: const Color.fromARGB(255, 164, 154, 239),
         child: const Icon(Icons.arrow_back),
         onPressed: () {
-          //
+          Navigator.pushNamed(context, "/list");
         },
       ),
     );

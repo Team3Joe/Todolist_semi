@@ -40,7 +40,7 @@ class _LoginViewState extends State<LoginView> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text("TO DO LIST"),
-          toolbarHeight: 230,
+          toolbarHeight: 120,
           backgroundColor: const Color.fromARGB(255, 164, 154, 239),
         ),
         body: SingleChildScrollView(
@@ -50,7 +50,7 @@ class _LoginViewState extends State<LoginView> {
               child: Column(
                 children: [
                   const SizedBox(
-                    height: 50,
+                    height: 30,
                   ),
                   const Icon(
                     Icons.emoji_people_sharp,
@@ -100,7 +100,7 @@ class _LoginViewState extends State<LoginView> {
                     child: const Text('Log in'),
                   ),
                   const SizedBox(
-                    height: 30,
+                    height: 20,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

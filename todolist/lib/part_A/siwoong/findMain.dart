@@ -46,7 +46,7 @@ class _FindMainState extends State<FindMain>
       ),
       bottomNavigationBar: Container(
         color: const Color.fromARGB(255, 164, 154, 239),
-        height: 75,
+        height: 60,
         child: TabBar(
           controller: controller,
           labelColor: Colors.white,
@@ -56,7 +56,7 @@ class _FindMainState extends State<FindMain>
               text: 'ID 찾기',
             ),
             Tab(
-              text: 'PW 재설정',
+              text: 'PW 찾기',
             ),
           ],
         ),
