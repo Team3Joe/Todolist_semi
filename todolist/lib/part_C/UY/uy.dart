@@ -225,7 +225,7 @@ class _ListPageState extends State<ListPage>
 
   updateCheckboxAction(index) async {
     var url = Uri.parse(
-        'http://localhost:8080/Flutter/todolist_update_checkBox.jsp?check=${todolist[index]['check']}&lCode=${todolist[index]['code']}');
+        'http://localhost:8080/flutter/todolist_update_checkBox.jsp?check=${todolist[index]['check']}&lCode=${todolist[index]['code']}');
     var response = await http.get(url);
     setState(() {
       var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
