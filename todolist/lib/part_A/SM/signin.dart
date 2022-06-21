@@ -237,7 +237,7 @@ class _SigninState extends State<Signin> {
       result = dataConvertedJSON['result'];
 
       if (result == 'OK') {
-        //_showDialog(context);
+       _showDialog(context);
       } else {
         errorSnackBar(context);
       }
